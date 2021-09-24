@@ -12,7 +12,7 @@
 
 
 
-<title>数据 - AdminLTE2定制版</title>
+<title>题库列表</title>
 <meta name="description" content="AdminLTE2定制版">
 <meta name="keywords" content="AdminLTE2定制版">
 
@@ -454,6 +454,34 @@
 				}
 				$(this).data("clicks", !clicks);
 			});
+
+			function initSection() {
+				//ajax异常处理：controller加@ResponseBody注解；js使用JSON.stringify(data)解析
+				$.ajax({
+					type:'POST',
+					url:'${pageContext.request.contextPath}/manage/findAllSectionName.do',
+					// data:{'username':username, 'password':password},
+					datatype:'json',
+					async:'false',// false代表等待ajax执行完毕后才执行alert("ajax执行完毕")语句;想一个Ajax执行完后再执行另一个Ajax, 需要把async=false
+					success:function(data){
+						// alert(JSON.stringify(data));  //[{"id":5,"name":"管制口","stationList":[]}]
+						// var outTrxObj=JSON.stringify(data);
+						// alert(data);
+						$("#sectionName").append("<option selected='selected'  value=0> </option>"); //显示空行
+						for(var i=0;i<data.length;i++){  //第一层循环取到各个list
+							var section = data[i];
+							$("#sectionName").append("<option value="+ section.id + ">" + section.name +"</option>");
+						}
+					},
+					error:function (data) {
+						alert("error..........")
+					}
+
+				})
+			}
+			// 初始化部门信息
+			initSection();
+
 		});
 	</script>
 </body>

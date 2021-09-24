@@ -5,6 +5,9 @@ package com.weicx.controller;/**
 
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.weicx.domain.Sections;
 import com.weicx.domain.Station;
 import com.weicx.service.IManageService;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -48,6 +52,13 @@ public class ManageController {
         }else {
             return "failer";
         }
+    }
+
+    @ResponseBody
+    @RequestMapping("findAllSectionName.do")
+    public String findAllSectionName() throws Exception {
+        List<Sections> sectionsList = manageService.findAllSection();
+        return JSONObject.toJSONString(sectionsList);
     }
 
 
