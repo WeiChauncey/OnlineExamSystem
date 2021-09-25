@@ -135,166 +135,192 @@
 			<section class="content">
 
 				<!-- .box-body -->
-				<div class="box box-primary">
-					<div class="box-header with-border">
-						<h3 class="box-title">列表</h3>
-					</div>
+                <div class="row">
+                    <%--left column--%>
+                    <div class="col-md-4">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">岗位信息</h3>
+                            </div>
 
-					<div class="box-body">
+                            <div class="box-body">
 
-						<!-- 数据表格 -->
-						<div class="table-box">
-<%--							筛选框--%>
-							<div >
-								<div class="col-md-1 title">工段</div>
-								<div class="col-md-5 data">
-									<select class="form-control select2" style="width: 100%"
-											name="is_random" id="sectionName">
-									</select>
-								</div>
-								<div class="col-md-1 title">岗位</div>
-								<div class="col-md-5 data">
-									<select class="form-control select2" style="width: 100%"
-											name="is_random">
-										<option value="0" selected="selected">随机</option>
-										<option value="1">手动</option>
-									</select>
-								</div>
-							</div>
-							<!--工具栏-->
-							<div class="pull-left">
-								<div class="form-group form-inline">
-									<div class="btn-group">
-										<button type="button" class="btn btn-default" title="新建"
-											onclick="location.href='${pageContext.request.contextPath}/pages/question-lib-add.jsp'">
-											<i class="fa fa-file-o"></i> 新建
-										</button>
-										<button type="button" class="btn btn-default" title="删除">
-											<i class="fa fa-trash-o"></i> 删除
-										</button>
-										<button type="button" class="btn btn-default" title="开启">
-											<i class="fa fa-check"></i> 开启
-										</button>
-										<button type="button" class="btn btn-default" title="屏蔽">
-											<i class="fa fa-ban"></i> 屏蔽
-										</button>
-										<button type="button" class="btn btn-default" title="刷新">
-											<i class="fa fa-refresh"></i> 刷新
-										</button>
-									</div>
-								</div>
-							</div>
-<%--							<div class="box-tools pull-right">--%>
-<%--								<div class="has-feedback">--%>
-<%--									<input type="text" class="form-control input-sm"--%>
-<%--										placeholder="搜索"> <span--%>
-<%--										class="glyphicon glyphicon-search form-control-feedback"></span>--%>
-<%--								</div>--%>
-<%--							</div>--%>
-							<!--工具栏/-->
+                                <!-- 数据表格 -->
+                                <div class="table-box">
 
-							<!--数据列表-->
-							<table id="dataList"
-								class="table table-bordered table-striped table-hover dataTable">
-								<thead>
-									<tr>
-										<th class="" style="padding-right: 0px;"><input
-											id="selall" type="checkbox" class="icheckbox_square-blue">
-										</th>
-										<th class="sorting_asc">题目</th>
-										<th class="sorting">岗位</th>
-										<th class="sorting_desc">题型</th>
-										<th class="sorting_asc sorting_asc_disabled">分值</th>
-										<th class="sorting_desc sorting_desc_disabled">作者</th>
-										<th class="sorting_desc sorting_desc_disabled">导入文件</th>
-<%--										<th class="text-center sorting">应考/已考</th>--%>
-<%--										<th class="sorting">作者</th>--%>
-<%--										<th class="sorting">出题日期</th>--%>
-<%--										<th class="text-center sorting">随机试卷</th>--%>
-<%--										<th class="text-center sorting">状态</th>--%>
-<%--										<th class="text-center">操作</th>--%>
-									</tr>
-								</thead>
-								<tbody>
+                                    <!--数据列表-->
+                                    <div class="tab-pane" id="tab-treetable">
+                                        <table id="collapse-table"
+                                               class="table table-bordered table-hover dataTable">
+                                            <thead>
+                                            <tr>
+                                                <th>工段</th>
+                                            </tr>
+                                            </thead>
 
 
-									<c:forEach items="${pageInfo.list}" var="questionLib">
-<%--										title  station_id  time   type  pass_score   owner  is_random  closed--%>
-										<tr>
-											<td><input name="ids" type="checkbox"></td>
-											<td>${questionLib.qns }</td>
-											<td>${questionLib.station.name }</td>
-											<td>${questionLib.qtype.name }</td>
-											<td>${questionLib.score }</td>
-											<td>${questionLib.owner.name }</td>
+												<c:forEach items="${sectionsList}" var="section" varStatus="sectionNo">
+													<tr data-tt-id="${sectionNo.index+1}">   <!--sectionNo.index 从0开始-->
+															<td colspan="1">${section.name}</td>      <!--显示列数-->
+														<tbody>
 
-											<td>${questionLib.filename }</td>
-<%--											<td class="text-center">${product.pass_score }</td>--%>
-<%--											<td>${product.cdateStr }</td>--%>
-<%--											<td class="text-center">${product.is_randomStr }</td>--%>
-<%--											<td class="text-center">${product.closedStr }</td>--%>
-											<td class="text-center">
-												<button type="button" class="btn bg-olive btn-xs">切换</button>
-												<button type="button" class="btn bg-olive btn-xs" onclick="location.href='${pageContext.request.contextPath}/question/findById.do?id=${questionLib.qid}'">信息</button>
-												<button type="button" class="btn bg-olive btn-xs">删除</button>
-											</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-								<!--
-                            <tfoot>
-                            <tr>
-                            <th>Rendering engine</th>
-                            <th>Browser</th>
-                            <th>Platform(s)</th>
-                            <th>Engine version</th>
-                            <th>CSS grade</th>
-                            </tr>
-                            </tfoot>-->
-							</table>
-							<!--数据列表/-->
+															<c:forEach items="${section.stationList}" var="station" varStatus="stationNo">       <!--岗位-->
 
-						</div>
-						<!-- 数据表格 /-->
+															<tr data-tt-id=${sectionNo.index+1}${stationNo.index+1} data-tt-parent-id="${sectionNo.index+1}">
+																<td>${station.name}</td>
+															</tr>
 
+															</c:forEach>
 
-					</div>
-					<!-- /.box-body -->
-
-					<!-- .box-footer-->
-					<div class="box-footer">
-						<div class="pull-left">
-							<div class="form-group form-inline">
-								总共2 页，共14 条数据。 每页 <select class="form-control" id="changePageSize" onchange="changePageSize()">
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-								</select> 条
-							</div>
-						</div>
-
-						<div class="box-tools pull-right">
-							<ul class="pagination">
-<%--								第一页，每页的数量--%>
-								<li><a href="${pageContext.request.contextPath}/question/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a></li>
-								<li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pageNum-1}&size=${pageInfo.pageSize}">上一页</a></li>
-
-								<c:forEach begin="1" end="${pageInfo.pages>10?10:pageInfo.pages}" var="pageNum">
-									<li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageNum}&size=${pageInfo.pageSize}">${pageNum}</a></li>
-								</c:forEach>
-								<li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pageNum+1}&size=${pageInfo.pageSize}">下一页</a></li>
-<%--	最后一页，每页的数量--%>
-								<li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a></li>
-							</ul>
-						</div>
-
-					</div>
-					<!-- /.box-footer-->
+														</tbody>
+													</tr>
+												</c:forEach>
 
 
 
-				</div>
+
+                                        </table>
+                                    </div>
+                                    <!--数据列表/-->
+
+                                </div>
+                                <!-- 数据表格 /-->
+
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                        <%--right column--%>
+                    <div class="col-md-8">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <!--工具栏-->
+                                <div >
+                                    <div class="col-md-1 title">工段</div>
+                                    <div class="col-md-4 data">
+                                        <select class="form-control select2" style="width: 100%"
+                                                name="is_random" id="sectionName">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1 title">岗位</div>
+                                    <div class="col-md-4 data">
+                                        <select class="form-control select2" style="width: 100%"
+                                                name="is_random" id="stationName">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 data">
+                                        <button type="button" class="btn btn-default" title="查询">
+                                            <i class="fa fa-search"></i> 查询
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!--工具栏/-->
+                            </div>
+
+                            <div class="box-body">
+
+                                <!-- 数据表格 -->
+                                <div class="table-box">
+
+
+                                    <!--数据列表-->
+                                    <table id="dataList"
+                                           class="table table-bordered table-striped table-hover dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th class="" style="padding-right: 0px;"><input
+                                                    id="selall" type="checkbox" class="icheckbox_square-blue">
+                                            </th>
+                                            <th class="sorting_asc sorting_asc_disabled">题目</th>
+                                            <th class="sorting sorting_asc_disabled">岗位</th>
+                                            <th class="sorting_desc sorting_asc_disabled">题型</th>
+                                            <th class="sorting_asc sorting_asc_disabled">分值</th>
+                                            <th class="sorting_desc sorting_desc_disabled">作者</th>
+                                            <th class="sorting_desc sorting_desc_disabled">导入文件</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                        <c:forEach items="${pageInfo.list}" var="questionLib">
+                                            <%--										title  station_id  time   type  pass_score   owner  is_random  closed--%>
+                                            <tr>
+                                                <td><input name="ids" type="checkbox"></td>
+                                                <td>${questionLib.qns }</td>
+                                                <td>${questionLib.station.name }</td>
+                                                <td>${questionLib.qtype.name }</td>
+                                                <td>${questionLib.score }</td>
+                                                <td>${questionLib.owner.name }</td>
+
+                                                <td>${questionLib.filename }</td>
+                                                    <%--											<td class="text-center">${product.pass_score }</td>--%>
+                                                    <%--											<td>${product.cdateStr }</td>--%>
+                                                    <%--											<td class="text-center">${product.is_randomStr }</td>--%>
+                                                    <%--											<td class="text-center">${product.closedStr }</td>--%>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn bg-olive btn-xs" onclick="location.href='${pageContext.request.contextPath}/question/findById.do?id=${questionLib.qid}'">修改</button>
+                                                    <button type="button" class="btn bg-olive btn-xs">删除</button>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                        <!--
+                                    <tfoot>
+                                    <tr>
+                                    <th>Rendering engine</th>
+                                    <th>Browser</th>
+                                    <th>Platform(s)</th>
+                                    <th>Engine version</th>
+                                    <th>CSS grade</th>
+                                    </tr>
+                                    </tfoot>-->
+                                    </table>
+                                    <!--数据列表/-->
+
+                                </div>
+                                <!-- 数据表格 /-->
+
+
+                            </div>
+                            <!-- /.box-body -->
+
+                            <!-- .box-footer-->
+                            <div class="box-footer">
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        总共2 页，共14 条数据。 每页 <select class="form-control" id="changePageSize" onchange="changePageSize()">
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                    </select> 条
+                                    </div>
+                                </div>
+
+                                <div class="box-tools pull-right">
+                                    <ul class="pagination">
+                                        <%--								第一页，每页的数量--%>
+                                        <li><a href="${pageContext.request.contextPath}/question/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pageNum-1}&size=${pageInfo.pageSize}">上一页</a></li>
+
+                                        <c:forEach begin="1" end="${pageInfo.pages>10?10:pageInfo.pages}" var="pageNum">
+                                            <li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageNum}&size=${pageInfo.pageSize}">${pageNum}</a></li>
+                                        </c:forEach>
+                                        <li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pageNum+1}&size=${pageInfo.pageSize}">下一页</a></li>
+                                        <%--	最后一页，每页的数量--%>
+                                        <li><a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <!-- /.box-footer-->
+
+
+
+                        </div>
+                    </div>
+                </div>
 
 			</section>
 			<!-- 正文区域 /-->
@@ -432,6 +458,39 @@
 				liObj.addClass("active");
 			}
 		}
+		function initStationBySection() {
+			$.ajax({
+				type:'POST',
+				url:'${pageContext.request.contextPath}/manage/findAllSectionName.do',
+				// data:{'username':username, 'password':password},
+				datatype:'json',
+				async:'false',// false代表等待ajax执行完毕后才执行alert("ajax执行完毕")语句;想一个Ajax执行完后再执行另一个Ajax, 需要把async=false
+				success:function(data){
+					$("#stationName").append("<option selected='selected'  value=0> </option>"); //显示空行
+					var selectSectionId = $("#sectionName").val();
+					for(var i=0;i<data.length;i++){  //第一层循环取到各个list
+						var section = data[i];
+						if (selectSectionId ==section.id){
+							for (var j=0; j<section.stationList.length;j++){
+								var station = section.stationList[j];
+								$("#stationName").append("<option value="+ station.id + ">" + station.name +"</option>");
+							}
+
+						}
+
+					}
+				},
+				error:function (data) {
+					alert("error..........")
+				}
+
+			})
+		}
+
+		$("#sectionName").change(function () {
+			initStationBySection()
+
+		})
 
 		$(document).ready(function() {
 
@@ -481,6 +540,16 @@
 			}
 			// 初始化部门信息
 			initSection();
+
+		});
+
+
+		$(document).ready(function() {
+
+			/*table tree*/
+			$("#collapse-table").treetable({
+				expandable: true
+			});
 
 		});
 	</script>
