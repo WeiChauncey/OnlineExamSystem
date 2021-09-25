@@ -9,9 +9,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>数据 - AdminLTE2定制版</title>
-    <meta name="description" content="AdminLTE2定制版">
-    <meta name="keywords" content="AdminLTE2定制版">
+    <title>用户列表</title>
+    <meta name="description" content="OnlineExamSystem">
+    <meta name="keywords" content="OnlineExamSystem">
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta
@@ -111,14 +111,14 @@
                             <thead>
                             <tr>
                                 <th class="sorting_asc sorting_asc_disabled">序号</th>
-                                <th class="sorting_asc sorting_asc_disabled" >姓名</th>
+                                <th class="sorting_asc sorting_asc_disabled">姓名</th>
                                 <th class="sorting_asc sorting_asc_disabled">工号</th>
                                 <th class="sorting_asc sorting_asc_disabled">所属岗位</th>
                                 <th class="sorting_asc sorting_asc_disabled">管理岗位</th>
                                 <th class="sorting_asc sorting_asc_disabled">出题岗位</th>
                                 <th class="sorting_desc sorting_desc_disabled">管理员</th>
-<%--                                <th class="text-center" >操</th>--%>
-<%--                                <th class="text-center" >作</th>--%>
+                                <%--                                <th class="text-center" >操</th>--%>
+                                <%--                                <th class="text-center" >作</th>--%>
                             </tr>
                             </thead>
                             <tbody>
@@ -129,19 +129,19 @@
                                     <td>${user.name }</td>
                                     <td>${user.id }</td>
                                     <td>
-                                    <c:forEach items="${user.ownStations}" var="ownStation"  >
-                                        <span class="label label-info">${ownStation.name}</span>
-                                    </c:forEach>
+                                        <c:forEach items="${user.ownStations}" var="ownStation">
+                                            <span class="label label-info">${ownStation.name}</span>
+                                        </c:forEach>
                                     </td>
                                     <td>
-                                    <c:forEach items="${user.powerStations}" var="powerStation"  >
-                                     <span class="label label-info">${powerStation.name}</span>
-                                    </c:forEach>
+                                        <c:forEach items="${user.powerStations}" var="powerStation">
+                                            <span class="label label-info">${powerStation.name}</span>
+                                        </c:forEach>
                                     </td>
                                     <td>
-                                    <c:forEach items="${user.qmakerStations}" var="qmakerStations" >
-                                        <span class="label label-info">${qmakerStations.name}</span>
-                                    </c:forEach>
+                                        <c:forEach items="${user.qmakerStations}" var="qmakerStations">
+                                            <span class="label label-info">${qmakerStations.name}</span>
+                                        </c:forEach>
                                     </td>
 
                                     <td>${user.admin==1?"是":'否' }</td>
@@ -149,7 +149,8 @@
                                     <td class="text-center">
                                         <a href="${pageContext.request.contextPath}/user/findById.do?id=${user.id}"
                                            class="btn bg-olive btn-xs">详情</a>
-                                    </td> <td class="text-center">
+                                    </td>
+                                    <td class="text-center">
                                         <a href="${pageContext.request.contextPath}/user/deleteUser.do?id=${user.id}"
                                            class="btn bg-olive btn-xs">删除</a>
                                     </td>
@@ -211,7 +212,7 @@
             <b>Version</b> 1.0.8
         </div>
         <strong>Copyright &copy; 2014-2017 <a
-                href="http://www.itcast.cn">研究院研发部</a>.
+                href="http://www.baidu.com">创新研究院</a>.
         </strong> All rights reserved.
     </footer>
     <!-- 底部导航 /-->
@@ -276,6 +277,7 @@
             locale: 'zh-CN'
         });
     });
+
     // 设置激活菜单
     function setSidebarActive(tagUri) {
         var liObj = $("#" + tagUri);

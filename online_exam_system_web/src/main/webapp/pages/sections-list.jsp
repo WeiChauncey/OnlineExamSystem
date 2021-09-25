@@ -10,9 +10,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 
-    <title>数据 - AdminLTE2定制版</title>
-    <meta name="description" content="AdminLTE2定制版">
-    <meta name="keywords" content="AdminLTE2定制版">
+    <title>岗位列表</title>
+    <meta name="description" content="OnlineExamSystem">
+    <meta name="keywords" content="OnlineExamSystem">
 
 
     <!-- Tell the browser to be responsive to screen width -->
@@ -118,10 +118,6 @@
                         <!--工具栏-->
                         <div class="box-tools pull-right">
                             <div class="btn-group">
-                                <%--									<button type="button" class="btn btn-default" title="新建"--%>
-                                <%--											onclick="location.href='${pageContext.request.contextPath}/pages/station-add.jsp'">--%>
-                                <%--										<i class="fa fa-file-o"></i> 新建--%>
-                                <%--									</button>--%>
                                 <!--模态窗口-->
                                 <button type="button" class="btn btn-default" data-toggle="modal"
                                         data-target="#addModal">
@@ -243,8 +239,10 @@
                                                             </button>
                                                                 <%--																	<button type="button" class="btn btn-outline" data-dismiss="modal" onclick="location.href='${pageContext.request.contextPath}/manage/modifySection.do?id=${sections.id}&sectonName=$(#sectionName)'">保存</button>--%>
                                                                 <%--																	<button type="submit" class="btn btn-outline" data-dismiss="modal" >保存</button>--%>
-<%--                                                            <button type="submit" class="btn btn-outline">保存</button>--%>
-                                                            <button type="button" value="你好" onclick="save()" class="btn btn-outline" data-dismiss="modal" >保存</button>
+                                                                <%--                                                            <button type="submit" class="btn btn-outline">保存</button>--%>
+                                                            <button type="button" value="你好" onclick="save()"
+                                                                    class="btn btn-outline" data-dismiss="modal">保存
+                                                            </button>
                                                         </div>
                                                     </div>
 
@@ -289,7 +287,7 @@
             <b>Version</b> 1.0.8
         </div>
         <strong>Copyright &copy; 2014-2017 <a
-                href="http://www.itcast.cn">研究院研发部</a>.
+                href="http://www.baidu.com">创新研究院</a>.
         </strong> All rights reserved.
     </footer>
     <!-- 底部导航 /-->
@@ -384,6 +382,8 @@
         src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script
         src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+
 <script>
     $(document).ready(function () {
         // 选择框
@@ -413,12 +413,13 @@
             liObj.addClass("active");
         }
     }
-    function save(){
+
+    function save() {
         $.ajax({
             //几个参数需要注意一下
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: "/users/login" ,//url
+            url: "/users/login",//url
             data: $('#form1').serialize(),
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
@@ -427,12 +428,13 @@
                 }
                 ;
             },
-            error : function() {
+            error: function () {
                 alert("异常！");
             }
         });
 
     }
+
     $(document).ready(function () {
 
         // 激活导航位置

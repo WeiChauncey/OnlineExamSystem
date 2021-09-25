@@ -8,9 +8,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>数据 - AdminLTE2定制版</title>
-    <meta name="description" content="AdminLTE2定制版">
-    <meta name="keywords" content="AdminLTE2定制版">
+    <title>用户详情</title>
+    <meta name="description" content="OnlineExamSystem">
+    <meta name="keywords" content="OnlineExamSystem">
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta
@@ -87,116 +87,122 @@
                 <li><a
                         href="${pageContext.request.contextPath}/user/findAll.do">用户管理</a></li>
 
-                <li class="active"  id="submit_btn">用户详情</li>
+                <li class="active" id="submit_btn">用户详情</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
         <form
                 action="${pageContext.request.contextPath}/user/modifyStationByUser.do"
                 method="post">
-        <!-- 正文区域 -->
-        <section class="content"> <!-- .box-body -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h2 class="box-title">${user.name}(${user.id})</h2>
-                </div>
+            <!-- 正文区域 -->
+            <section class="content"> <!-- .box-body -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">${user.name}(${user.id})</h2>
+                    </div>
 
 
-                <div class="box-body">
+                    <div class="box-body">
 
-                    <!-- 数据表格 -->
-                    <div class="table-box">
-                        <input type="hidden" name="userId" value="${user.id}">
-<%--                        避免controller空参数问题--%>
-                        <input type="hidden" name="oids" value=999>
-                        <input type="hidden" name="pids" value=999>
-                        <input type="hidden" name="mids" value="999">
-                        <!--数据列表-->
-                        <table id="dataList"
-                               class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                            <tr>
-                                <th class="sorting_asc sorting_asc_disabled">序号</th>
-                                <th class="sorting_asc sorting_asc_disabled">ID</th>
-                                <th class="sorting_desc sorting_asc_disabled">岗位</th>
-                                <th class="sorting_asc sorting_asc_disabled">工段</th>
-                                <th class="sorting_asc sorting_asc_disabled">所属岗位</th>
-                                <th class="sorting_asc sorting_asc_disabled">管理岗位</th>
-                                <th class="sorting_asc sorting_asc_disabled">出题岗位</th>
-<%--                                <th class="sorting_desc sorting_desc_disabled">管理员</th>--%>
-                                <%--										<th class="sorting">状态</th>--%>
-                                <%--										<th class="text-center">操作</th>--%>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-
-                            <c:forEach items="${stationList}" var="station" varStatus="status">
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+                            <input type="hidden" name="userId" value="${user.id}">
+                            <%--                        避免controller空参数问题--%>
+                            <input type="hidden" name="oids" value=999>
+                            <input type="hidden" name="pids" value=999>
+                            <input type="hidden" name="mids" value="999">
+                            <!--数据列表-->
+                            <table id="dataList"
+                                   class="table table-bordered table-striped table-hover dataTable">
+                                <thead>
                                 <tr>
-                                        <%--											<td><input name="ids" type="checkbox"></td>--%>
-                                    <td>${status.count }</td>
-                                    <td>${station.id }</td>
-                                    <td>${station.name }</td>
-                                    <td>${station.section_id.name }</td>
-                                    <td><input name="oids" type="checkbox"  value="${station.id}"  ${user.ownStationsId.contains(station.id)?'checked': 'unchecked'} ></td>
-                                    <td><input name="pids" type="checkbox"  value="${station.id}"  ${user.powerStationsId.contains(station.id)?'checked': 'unchecked'} ></td>
-                                    <td><input name="mids" type="checkbox"  value="${station.id}"  ${user.qmakerStationsId.contains(station.id)?'checked': 'unchecked'} ></td>
-
-
-
+                                    <th class="sorting_asc sorting_asc_disabled">序号</th>
+                                    <th class="sorting_asc sorting_asc_disabled">ID</th>
+                                    <th class="sorting_desc sorting_asc_disabled">岗位</th>
+                                    <th class="sorting_asc sorting_asc_disabled">工段</th>
+                                    <th class="sorting_asc sorting_asc_disabled">所属岗位</th>
+                                    <th class="sorting_asc sorting_asc_disabled">管理岗位</th>
+                                    <th class="sorting_asc sorting_asc_disabled">出题岗位</th>
+                                    <%--                                <th class="sorting_desc sorting_desc_disabled">管理员</th>--%>
+                                    <%--										<th class="sorting">状态</th>--%>
+                                    <%--										<th class="text-center">操作</th>--%>
                                 </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                        <!--数据列表/-->
-                        <!--工具栏-->
-                        <div class="box-tools text-center">
-                            <button type="submit" class="btn bg-maroon">保存</button>
-                            <button type="button" class="btn bg-default"
-                                    onclick="history.back(-1);">返回</button>
+                                </thead>
+                                <tbody>
+
+
+                                <c:forEach items="${stationList}" var="station" varStatus="status">
+                                    <tr>
+                                            <%--											<td><input name="ids" type="checkbox"></td>--%>
+                                        <td>${status.count }</td>
+                                        <td>${station.id }</td>
+                                        <td>${station.name }</td>
+                                        <td>${station.section_id.name }</td>
+                                        <td><input name="oids" type="checkbox"
+                                                   value="${station.id}"  ${user.ownStationsId.contains(station.id)?'checked': 'unchecked'} >
+                                        </td>
+                                        <td><input name="pids" type="checkbox"
+                                                   value="${station.id}"  ${user.powerStationsId.contains(station.id)?'checked': 'unchecked'} >
+                                        </td>
+                                        <td><input name="mids" type="checkbox"
+                                                   value="${station.id}"  ${user.qmakerStationsId.contains(station.id)?'checked': 'unchecked'} >
+                                        </td>
+
+
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            <!--数据列表/-->
+                            <!--工具栏-->
+                            <div class="box-tools text-center">
+                                <button type="submit" class="btn bg-maroon">保存</button>
+                                <button type="button" class="btn bg-default"
+                                        onclick="history.back(-1);">返回
+                                </button>
+                            </div>
+                            <!--工具栏/-->
                         </div>
-                        <!--工具栏/-->
+                        <!-- 数据表格 /-->
+
                     </div>
-                    <!-- 数据表格 /-->
+                    <!-- /.box-body -->
+
+                    <!-- .box-footer-->
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <div class="form-group form-inline">
+                                总共2 页，共14 条数据。 每页 <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select> 条
+                            </div>
+                        </div>
+
+                        <div class="box-tools pull-right">
+                            <ul class="pagination">
+                                <li><a href="#" aria-label="Previous">首页</a></li>
+                                <li><a href="#">上一页</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">下一页</a></li>
+                                <li><a href="#" aria-label="Next">尾页</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /.box-footer-->
 
                 </div>
-                <!-- /.box-body -->
 
-                <!-- .box-footer-->
-                <div class="box-footer">
-                    <div class="pull-left">
-                        <div class="form-group form-inline">
-                            总共2 页，共14 条数据。 每页 <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select> 条
-                        </div>
-                    </div>
-
-                    <div class="box-tools pull-right">
-                        <ul class="pagination">
-                            <li><a href="#" aria-label="Previous">首页</a></li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#" aria-label="Next">尾页</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- /.box-footer-->
-
-            </div>
-
-        </section>
-        <!-- 正文区域 /-->
+            </section>
+            <!-- 正文区域 /-->
         </form>
     </div>
     <!-- @@close -->
@@ -208,7 +214,7 @@
             <b>Version</b> 1.0.8
         </div>
         <strong>Copyright &copy; 2014-2017 <a
-                href="http://www.itcast.cn">研究院研发部</a>.
+                href="http://www.baidu.com">创新研究院</a>.
         </strong> All rights reserved.
     </footer>
     <!-- 底部导航 /-->
