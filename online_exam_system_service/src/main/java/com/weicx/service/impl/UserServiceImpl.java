@@ -61,8 +61,10 @@ public class UserServiceImpl implements IUserService {
         //将自己的用户对象封装成UserDetails（User实现UserDetails）
         //创建一个SpringSecurity frame的User对象  User（用户名，密码，权限）
 
-        //管理员进入
-        User user = new User(userInfo.getName(), userInfo.getPassword(), userInfo.getAdmin() == 0 ?false:true, true, true, true, getAuthority());
+        //只有管理员可以登录
+//        User user = new User(userInfo.getName(), userInfo.getPassword(), userInfo.getAdmin() == 0 ?false:true, true, true, true, getAuthority(userInfo));
+        //所有人都可以登录
+        User user = new User(userInfo.getName(), userInfo.getPassword(), true, true, true, true, getAuthority(userInfo));
 
 
         return user;
@@ -77,9 +79,16 @@ public class UserServiceImpl implements IUserService {
 //        }
 //        return authoritys;
 //    }
-    private List<SimpleGrantedAuthority> getAuthority() {
+    private List<SimpleGrantedAuthority> getAuthority(Users userInfo) {
         ArrayList<SimpleGrantedAuthority> authoritys = new ArrayList<>();
-        authoritys.add(new SimpleGrantedAuthority("ROLE_ADMIN")) ;
+        if (null!=userInfo){
+            if (userInfo.getAdmin()==1){
+                authoritys.add(new SimpleGrantedAuthority("ROLE_ADMIN")) ;
+            }else{
+                authoritys.add(new SimpleGrantedAuthority("ROLE_USER")) ;
+            }
+
+        }
         return authoritys;
     }
 

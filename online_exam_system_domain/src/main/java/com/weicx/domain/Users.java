@@ -16,7 +16,7 @@ public class Users {
     private String  id ;//(Pr imary)	varchar(8)	No
     private String  name	 ;//varchar(50)	No			用户真实姓名
     private String  password ;//	varchar(50)	No			用户密码
-    private Integer  admin	 ;//int(10)	No	0		是否是管理员
+    private Integer  admin	 ;//1:管理员 ROLE_ADMIN     其他：ROLE_USER
     private List<Station> ownStations;  //所属岗位
     private List<Station> powerStations;  //负责岗位（出卷人）
     private List<Station> qmakerStations;  //出题岗位

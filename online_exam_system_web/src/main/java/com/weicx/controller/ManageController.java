@@ -12,6 +12,7 @@ import com.weicx.domain.Sections;
 import com.weicx.domain.Station;
 import com.weicx.service.IManageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +36,7 @@ public class ManageController {
     private IManageService manageService;
 
     @RequestMapping("findAllStation.do")
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //admin角色可以操作
     public ModelAndView findAllStation() throws Exception {
         ModelAndView mv = new ModelAndView();
         List<Station> stations = manageService.findAllStation();
@@ -63,6 +65,7 @@ public class ManageController {
 
 
     @RequestMapping("findAllSection.do")
+    @PreAuthorize("authentication.principal.username =='weicx'") //只有weicx用户可以操作
     public ModelAndView findAllSection() throws Exception {
         ModelAndView mv = new ModelAndView();
         List<Sections> sectionsList = manageService.findAllSection();
@@ -92,6 +95,13 @@ public class ManageController {
             return "failer";
         }
     }
-
+    @RequestMapping("findAllSectionQuestionLib.do")
+    public ModelAndView findAllSectionQuestionLib() throws Exception {
+        ModelAndView mv = new ModelAndView();
+        List<Sections> sectionsList = manageService.findAllSection();
+        mv.addObject("sectionsList",sectionsList);
+        mv.setViewName("question-lib-page-list");
+        return mv;
+    }
 
 }
