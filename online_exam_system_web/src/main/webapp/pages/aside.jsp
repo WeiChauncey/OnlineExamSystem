@@ -147,6 +147,24 @@
 
                 </ul>
             </li>
+            <li class="treeview"><a href="#"> <i class="fa fa-cube"></i>
+                <span>日志管理</span> <span class="pull-right-container"> <i
+                        class="fa fa-angle-left pull-right"></i>
+				</span>
+            </a>
+                <ul class="treeview-menu">
+
+                    <li id="log-management">
+
+                        <a
+                                href="${pageContext.request.contextPath}/sysLog/findAll.do">
+                            <i class="fa fa-circle-o"></i> 全部日志
+                        </a>
+
+                    </li>
+
+                </ul>
+            </li>
             <security:authorize access="hasRole('ADMIN')"> <!-- 只有admin可以看到该界面 -->
                 <li class="treeview"><a href="#"> <i class="fa fa-bar-chart-o"></i>
                     <span>报表</span> <span class="pull-right-container"> <i
