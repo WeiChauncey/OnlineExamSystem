@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <aside class="main-sidebar">
 	<!-- sidebar: style can be found in sidebar.less -->
 	<section class="sidebar">
@@ -11,7 +11,7 @@
 					class="img-circle" alt="User Image">
 			</div>
 			<div class="pull-left info">
-				<p>xxx</p>
+				<p>	<security:authentication property="principal.username"></security:authentication>     </p> <!-- 当前操作的对象principal -->
 				<a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
 			</div>
 		</div>
@@ -74,8 +74,9 @@
 				<ul class="treeview-menu">
 
 					<li id="system-setting"><a
-						href="${pageContext.request.contextPath}/question/findAll.do?page=1&size=6">
-							<i class="fa fa-circle-o"></i> 试题列表
+<%--						href="${pageContext.request.contextPath}/question/findAll.do?page=1&size=6">--%>
+						href="${pageContext.request.contextPath}/manage/findAllSectionQuestionLib.do">
+						<i class="fa fa-circle-o"></i> 试题列表
 					</a></li>
 					<li id="system-setting"><a
 						href="${pageContext.request.contextPath}/orders/findAll.do?page=1&pageSize=3"> <i
@@ -124,10 +125,14 @@
 			</a>
 				<ul class="treeview-menu">
 
-					<li id="manage-station"><a
+					<li id="manage-station">
+						<security:authorize access="hasRole('ADMIN')">     <!-- 只有admin可以看到该界面 -->
+						<a
 						href="${pageContext.request.contextPath}/manage/findAllStation.do">
 							<i class="fa fa-circle-o"></i> 岗位
-					</a></li>
+					</a>
+						</security:authorize>
+					</li>
 					<li id="manage-section"><a
 						href="${pageContext.request.contextPath}/manage/findAllSection.do"> <i
 							class="fa fa-circle-o"></i> 工段
