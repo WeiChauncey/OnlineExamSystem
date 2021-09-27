@@ -65,7 +65,7 @@ public class ManageController {
 
 
     @RequestMapping("findAllSection.do")
-    @PreAuthorize("authentication.principal.username =='weicx'") //只有weicx用户可以操作
+    @PreAuthorize("authentication.principal.username =='ethan'") //只有weicx用户可以操作
     public ModelAndView findAllSection() throws Exception {
         ModelAndView mv = new ModelAndView();
         List<Sections> sectionsList = manageService.findAllSection();
@@ -100,7 +100,7 @@ public class ManageController {
         ModelAndView mv = new ModelAndView();
         List<Sections> sectionsList = manageService.findAllSection();
         mv.addObject("sectionsList",sectionsList);
-        mv.setViewName("question-lib-page-list");
+        mv.setViewName("question-lib-page-list-tree");
         return mv;
     }
 

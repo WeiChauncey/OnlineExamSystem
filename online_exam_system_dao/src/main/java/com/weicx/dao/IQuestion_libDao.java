@@ -3,6 +3,8 @@ package com.weicx.dao;/**
  * @create 2021-09-12 20:06
  */
 
+import com.weicx.domain.Answer;
+import com.weicx.domain.Options;
 import com.weicx.domain.Question_lib;
 import com.weicx.domain.Quiz;
 import org.apache.ibatis.annotations.*;
@@ -36,7 +38,7 @@ public interface IQuestion_libDao {
             @Result(column = "station", property = "station", one = @One(select = "com.weicx.dao.IStationDao.findById")),
             @Result(column = "qtype", property = "qtype", one = @One(select = "com.weicx.dao.IQuestion_typeDao.findById")),
             @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
-            @Result(column = "qid", property = "Quizs", many = @Many(select = "com.weicx.dao.Quiz.findByQuestionLibId")),
+            @Result(column = "qid", property = "Quizs", many = @Many(select = "com.weicx.dao.IQuizDao.findByQuestionLibId")),
 
 
     })
@@ -60,5 +62,21 @@ public interface IQuestion_libDao {
      */
     @Select("select * from Question_lib where qid in (select qid from questions where eid = #{quizId})")
     List<Question_lib> findByQuizAutoId(String quizId) throws Exception;
+
+
+    @Select("select * from Question_lib where station = #{station_id}")
+    @Results({
+            @Result(id = true, column = "qid", property = "qid"),
+            @Result(column = "station", property = "station", one = @One(select = "com.weicx.dao.IStationDao.findById")),
+            @Result(column = "qtype", property = "qtype", one = @One(select = "com.weicx.dao.IQuestion_typeDao.findById")),
+            @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
+            @Result(column = "qid", property = "Quizs", many = @Many(select = "com.weicx.dao.IQuizDao.findByQuestionLibId")),
+
+
+    })
+    List<Question_lib> findByStation(String station_id);
+
+
+
 
 }

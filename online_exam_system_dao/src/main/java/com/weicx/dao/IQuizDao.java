@@ -35,7 +35,7 @@ public interface IQuizDao {
      * @return
      * @throws Exception
      */
-    @Select("select * from quiz where eid in (select eid from question where qid = #{questionLibId})")
+    @Select("select * from quiz where eid in (select eid from questions where qid = #{questionLibId})")
     List<Quiz> findByQuestionLibId(String questionLibId) throws Exception;
 
 //    /**
