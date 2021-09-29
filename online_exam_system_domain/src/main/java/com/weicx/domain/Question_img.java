@@ -18,6 +18,9 @@ public class Question_img {
 	private Integer 	img_width;	   //	图片宽度
 	private Integer 	img_height ;  //	图片高度
 
+    public Question_img() {
+    }
+
     public String getQid() {
         return qid;
     }

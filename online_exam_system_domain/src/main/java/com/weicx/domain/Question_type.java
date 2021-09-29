@@ -16,6 +16,9 @@ public class Question_type {
     private Integer qtid ;       // (Primary)	int(10)	No
     private String name ;       //	varchar(50)	No
 
+    public Question_type() {
+    }
+
     public Integer getQtid() {
         return qtid;
     }

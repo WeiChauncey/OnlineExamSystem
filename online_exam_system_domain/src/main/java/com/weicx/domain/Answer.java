@@ -14,6 +14,9 @@ public class Answer {
     private String qid	  ;//试题id  mediumtext	No
     private String ansid  ;//答案	mediumtext	No
 
+    public Answer() {
+    }
+
     public String getQid() {
         return qid;
     }

@@ -15,6 +15,9 @@ public class SysLog {
     private Long executionTime;
     private String method;
 
+    public SysLog() {
+    }
+
     public String getId() {
         return id;
     }

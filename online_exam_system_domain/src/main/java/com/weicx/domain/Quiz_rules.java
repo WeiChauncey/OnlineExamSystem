@@ -15,6 +15,9 @@ public class Quiz_rules {
     private Integer qtype ; //	int(11)	No			题目类型
     private Integer score ; //	int(11)	No	0		该题型总分
 
+    public Quiz_rules() {
+    }
+
     public String getEid() {
         return eid;
     }

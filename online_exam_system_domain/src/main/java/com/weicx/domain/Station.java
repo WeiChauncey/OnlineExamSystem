@@ -20,6 +20,9 @@ public class Station {
    private Sections section_id	 ; //工段ID
     private List<Users> usersList; //用户信息
 
+    public Station() {
+    }
+
     public List<Users> getUsersList() {
         return usersList;
     }

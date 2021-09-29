@@ -22,6 +22,9 @@ public class Question_lib {
       private String filename ;    //   '该题目所属文件名'
       private List<Quiz> Quizs;  //试卷，多对多
 
+    public Question_lib() {
+    }
+
     public List<Quiz> getQuizs() {
         return Quizs;
     }

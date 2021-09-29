@@ -19,6 +19,9 @@ public class Sections {
    private String name   ; //	varchar(20)	No
     private List<Station> stationList;
 
+    public Sections() {
+    }
+
     public List<Station> getStationList() {
         return stationList;
     }

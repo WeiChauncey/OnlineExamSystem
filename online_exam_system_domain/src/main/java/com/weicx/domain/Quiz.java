@@ -29,6 +29,9 @@ public class Quiz {
     private String cdateStr;
     private List<Question_lib> Question_libs;  //试题，多对多
 
+    public Quiz() {
+    }
+
     public Station getStation() {
         return station;
     }

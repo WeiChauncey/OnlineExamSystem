@@ -18,6 +18,9 @@ public class Quiz_type {
     private Integer ok_interval	   ;// int(11)	No
     private Integer ng_interval	   ;// int(11)	No
 
+    public Quiz_type() {
+    }
+
     public Integer getId() {
         return id;
     }

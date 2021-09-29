@@ -13,6 +13,9 @@ public class Permission {
     private String url;
     private List<Role> roles;
 
+    public Permission() {
+    }
+
     public String getId() {
         return id;
     }

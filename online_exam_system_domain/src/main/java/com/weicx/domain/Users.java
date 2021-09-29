@@ -24,6 +24,9 @@ public class Users {
     private List<Integer> powerStationsId;  //负责岗位（出卷人）
     private List<Integer> qmakerStationsId;  //出题岗位
 
+    public Users() {
+    }
+
     public List<Integer> getOwnStationsId() {
         return ownStationsId;
     }

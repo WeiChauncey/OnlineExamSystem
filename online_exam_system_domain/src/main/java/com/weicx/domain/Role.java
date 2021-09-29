@@ -16,6 +16,9 @@ public class Role {
     private List<Permission> permissions;
     private List<Users> users;
 
+    public Role() {
+    }
+
     public String getId() {
         return id;
     }
