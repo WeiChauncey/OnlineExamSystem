@@ -13,7 +13,7 @@ import java.util.List;
  * @create 2020-07-28 2:19
  */
 public interface ISysLogDao {
-    @Insert("insert into sysLog (visitTime,username,ip,url,executionTime,method) values(#{visitTime},#{username},#{ip},#{url},#{executionTime},#{method})")
+    @Insert("insert into sysLog (id,visitTime,username,ip,url,executionTime,method) values(#{id},#{visitTime},#{username},#{ip},#{url},#{executionTime},#{method})")
     void save(SysLog sysLog) throws Exception;
 
     @Select("select * from syslog")

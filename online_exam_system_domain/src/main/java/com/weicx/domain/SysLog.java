@@ -1,5 +1,7 @@
 package com.weicx.domain;
 
+import com.weicx.utils.DateUtils;
+
 import java.util.Date;
 
 /**
@@ -35,6 +37,9 @@ public class SysLog {
     }
 
     public String getVisitTimeStr() {
+        if (null != visitTime) {
+            visitTimeStr = DateUtils.dateToString(visitTime,"yyyy-MM-dd HH:mm:ss");
+        }
         return visitTimeStr;
     }
 
