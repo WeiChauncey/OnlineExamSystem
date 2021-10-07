@@ -3,6 +3,8 @@ package com.weicx.domain;/**
  * @create 2021-09-13 17:26
  */
 
+import java.io.Serializable;
+
 /**
  * @ClassName Answer
  * @Description 试题的答案选项
@@ -10,7 +12,7 @@ package com.weicx.domain;/**
  * @date 17:26
  * @Version 1.0
  */
-public class Answer {
+public class Answer implements Serializable {
     private String qid	  ;//试题id  mediumtext	No
     private String ansid  ;//答案	mediumtext	No
 

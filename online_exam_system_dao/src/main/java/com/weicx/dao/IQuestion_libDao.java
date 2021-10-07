@@ -74,9 +74,8 @@ public interface IQuestion_libDao {
 
 
     })
-    List<Question_lib> findByStation(String station_id);
+    List<Question_lib> findByStation(String station_id) throws Exception;
 
-
-
-
+    @Update("UPDATE question_lib SET qns= #{qns} ,qtype=#{qtype} ,score=#{qscore}  WHERE qid=#{qid} ")
+    void updateQuestion(@Param("qid")String qid, @Param("qns") String qns, @Param("qtype") Integer qtid, @Param("qscore") String qscore) throws Exception;
 }

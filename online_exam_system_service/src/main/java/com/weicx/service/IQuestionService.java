@@ -29,4 +29,10 @@ public interface IQuestionService {
 
     //根据试题id查图片
     List<Question_img> findImageByQuestionId(String questionLibId) throws Exception;
+
+    //修改试题
+//    String questionModify(String qid, String qns, Integer qtid, String qscore, Integer img_cnt, String imgPath, Integer imgw, Integer imgh) throws Exception;
+
+    //修改试题
+    String questionModify(String qid, String qns, Integer qtid, String qscore, Integer img_cnt, String imgPath, Integer imgw, Integer imgh, List<Options> optionsList, String[] answerList) throws Exception;
 }

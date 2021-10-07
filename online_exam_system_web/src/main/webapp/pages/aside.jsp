@@ -2,50 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/ionicons/css/ionicons.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/iCheck/square/blue.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/morris/morris.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/datepicker/datepicker3.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/daterangepicker/daterangepicker.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/datatables/dataTables.bootstrap.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/treeTable/jquery.treetable.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/treeTable/jquery.treetable.theme.default.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/select2/select2.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/colorpicker/bootstrap-colorpicker.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/adminLTE/css/AdminLTE.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/adminLTE/css/skins/_all-skins.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/css/style.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/ionslider/ion.rangeSlider.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/ionslider/ion.rangeSlider.skinNice.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/bootstrap-slider/slider.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -69,19 +26,19 @@
                     href="${pageContext.request.contextPath}/pages/main.jsp"><i
                     class="fa fa-university"></i> <span>考试</span></a></li>
             <li class="treeview"><a href="#"> <i class="fa fa-clock-o"></i>
-                <span>历史</span> <span class="pull-right-container"> <i
+                <span>历史#</span> <span class="pull-right-container"> <i
                         class="fa fa-angle-left pull-right"></i>
 				</span>
             </a>
                 <ul class="treeview-menu">
 
                     <li id="history-me"><a
-                            href="${pageContext.request.contextPath}/question/findAll.do?page=1&size=6">
-                        <i class="fa fa-circle-o"></i> 我的
+                            href="#">
+                        <i class="fa fa-circle-o"></i> 我的#
                     </a></li>
                     <li id="history-all"><a
-                            href="${pageContext.request.contextPath}/orders/findAll.do?page=1&pageSize=3"> <i
-                            class="fa fa-circle-o"></i> 考生
+                            href="#"> <i
+                            class="fa fa-circle-o"></i> 考生#
                     </a></li>
 
                 </ul>
@@ -103,8 +60,8 @@
                         <i class="fa fa-circle-o"></i> 试题列表tree
                     </a></li>
                     <li id="question-add"><a
-                            href="${pageContext.request.contextPath}/orders/findAll.do?page=1&pageSize=3"> <i
-                            class="fa fa-circle-o"></i> 添加试题
+                            href="#"> <i
+                            class="fa fa-circle-o"></i> 添加试题#
                     </a></li>
 
                 </ul>
@@ -122,14 +79,14 @@
                     </a></li>
                     <li id="quiz-add"><a
                             href="${pageContext.request.contextPath}/orders/findAll.do?page=1&pageSize=3"> <i
-                            class="fa fa-circle-o"></i> 添加试卷
+                            class="fa fa-circle-o"></i> 添加试卷#
                     </a></li>
 
                 </ul>
             </li>
             <li id="admin-index"><a
-                    href="${pageContext.request.contextPath}/pages/main.jsp"><i
-                    class="fa fa-balance-scale"></i> <span>批阅</span></a></li>
+                    href="#"><i
+                    class="fa fa-balance-scale"></i> <span>批阅#</span></a></li>
 
             <li class="treeview"><a href="#"> <i class="fa fa-user"></i>
                 <span>用户</span> <span class="pull-right-container"> <i
@@ -174,23 +131,23 @@
 
             <security:authorize access="hasRole('ADMIN')"> <!-- 只有admin可以看到该界面 -->
                 <li class="treeview"><a href="#"> <i class="fa fa-bar-chart-o"></i>
-                    <span>报表</span> <span class="pull-right-container"> <i
+                    <span>报表#</span> <span class="pull-right-container"> <i
                             class="fa fa-angle-left pull-right"></i>
 				</span>
                 </a>
                     <ul class="treeview-menu">
 
                         <li id="report-user"><a
-                                href="${pageContext.request.contextPath}/manage/findAllStation.do">
-                            <i class="fa fa-circle-o"></i> 考生成绩
+                                href="#">
+                            <i class="fa fa-circle-o"></i> 考生成绩#
                         </a></li>
                         <li id="report-error"><a
-                                href="${pageContext.request.contextPath}/manage/findAllSection.do"> <i
-                                class="fa fa-circle-o"></i> 错误统计
+                                href="#"> <i
+                                class="fa fa-circle-o"></i> 错误统计#
                         </a></li>
                         <li id="report-certification"><a
-                                href="${pageContext.request.contextPath}/manage/findAllSection.do"> <i
-                                class="fa fa-circle-o"></i> 认证资料
+                                href="#"> <i
+                                class="fa fa-circle-o"></i> 认证资料#
                         </a></li>
 
                     </ul>

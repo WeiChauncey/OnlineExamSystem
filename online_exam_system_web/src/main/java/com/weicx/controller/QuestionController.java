@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * @ClassName QuestionController
@@ -76,6 +77,120 @@ public class QuestionController {
         //PageInfo就是一个分页Bean
         PageInfo<Question_lib> questionLibPageInfo = new PageInfo(questionLibs);
         return JSONObject.toJSONString(questionLibPageInfo);
+    }
+
+
+    //试卷id  站点ID   试题类型  试题分数  题目  配图数量
+//    @RequestMapping("/modify.do")
+//    public ModelAndView questionModifyold(
+//
+//    @RequestParam(name = "cur_qid",required = true) String qid,
+//    @RequestParam(name = "sid",required = true) String sid,
+//    @RequestParam(name = "qtype",required = true) Integer qtid,
+//    @RequestParam(name = "qscore",required = true) String qscore,
+//    @RequestParam(name = "qns",required = true) String qns,
+//    @RequestParam(name = "img_cnt" ) Integer img_cnt,
+//    @RequestParam(name = "imgPath" ,defaultValue = "0"  ) String imgPath,
+//    @RequestParam(name = "imgw" , defaultValue = "0") Integer imgw,
+//    @RequestParam(name = "imgh", defaultValue = "0") Integer imgh
+//    ) throws Exception {
+////        String imgPath ="";
+////        Integer imgw=0;
+////        Integer
+//        //1 update questionLib
+//        ModelAndView mv = new ModelAndView();
+//        String replay = questionService.questionModify(qid,qns,qtid,qscore,img_cnt,imgPath,imgw,imgh);
+//        mv.addObject("questionLib",replay);
+//
+//        mv.setViewName("question-lib-show");
+//        return mv;
+//    }
+    /*sid: 4
+       cur_qid: 5eaa46bbd35c3
+       qtype: 1
+       qscore: 2
+       qns: 以下哪个为SOR机台BC端的报废Recipe()。
+       img_cnt: 0
+       opimg_1: 0
+       opimgw_1: 0
+       opimgh_1: 0
+       op_1: Scrap Only
+
+       opimg_2: 0
+       opimgw_2: 0
+       opimgh_2: 0
+       op_2: Plan Sort
+       opimg_3: 0
+       opimgw_3: 0
+       opimgh_3: 0
+       op_3: Turn Only
+       opimg_4: 0
+       opimgw_4: 0
+       opimgh_4: 0
+       as[]: op_4
+       op_4: 4Srcap Only*/
+    @ResponseBody
+    @RequestMapping("/modify1.do")
+    public String questionModify(HttpServletRequest request) throws Exception {
+//        String sid          =request.getParameter("sid");        //岗位ID
+        String qid              =request.getParameter("cur_qid");        //试题id
+        Integer  qtid             = Integer.valueOf(request.getParameter("qtype"));        //试题类型
+        String qscore            =request.getParameter("qscore");        //试题分数
+        String qns              =request.getParameter("qns");        //题目
+        String[] answerList         = request.getParameterValues("as[]");        //获取答案选项的op_序号
+        Integer img_cnt            = Integer.valueOf(request.getParameter("img_cnt"));        //题目配图数量
+        String  imgPath ="";
+        Integer  imgw=0;
+        Integer  imgh=0;
+        if (img_cnt!=0){ //有题目图片时，获取值
+            imgPath         =request.getParameter("imgPath");             //
+            imgw              = Integer.valueOf(request.getParameter("imgw"));        //
+            imgh             = Integer.valueOf(request.getParameter("imgh"));        //
+        }
+
+        List<Options> optionsList = new ArrayList<>();
+        Enumeration<String> parameterNames = request.getParameterNames();        //
+        while (parameterNames.hasMoreElements()){
+             String key = parameterNames.nextElement();
+            Boolean isAnswer=false;
+             //排除非选项
+             if (!key.substring(0,3).equals("op_")){
+                continue;
+             }
+            // 获得选项OP后面的序号,和内容
+            String optionNo = key.split("_")[1];
+            String  optionContext = request.getParameter(key).trim();
+            if (optionContext.length()==0){//选项内容为空，不保存。如果选项为图片也要写内容
+                continue;
+            }
+
+            if (Arrays.asList(answerList).contains(key)){
+                 isAnswer =true;
+            }
+
+            //题目选项配图
+            Integer isImg= Integer.valueOf(request.getParameter("opimg_"+optionNo));
+            Integer imgWidth=Integer.valueOf(request.getParameter("opimgw_"+optionNo));
+            Integer imgHigh=Integer.valueOf(request.getParameter("opimgh_"+optionNo));
+            if(qtid == 3||qtid == 4|| qtid == 5){ //填空、简答、判断题没有选项图片
+                isImg=0;
+                imgWidth=0;
+                imgHigh=0;
+            }
+            Options options = new Options(qid,optionContext,isImg,imgWidth,imgHigh,isAnswer);
+            optionsList.add(options);
+        }
+
+        String replay = questionService.questionModify(qid,qns,qtid,qscore,img_cnt,imgPath,imgw,imgh,optionsList,answerList);
+
+
+        //1 update questionLib
+//        ModelAndView mv = new ModelAndView();
+//        String replay = questionService.questionModify(questionLib);
+////        mv.addObject("questionLib",replay);
+
+//        mv.setViewName("question-lib-show");
+        return JSONObject.toJSONString(replay);
     }
 
 }

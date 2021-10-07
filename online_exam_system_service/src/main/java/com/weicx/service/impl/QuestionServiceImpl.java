@@ -9,11 +9,13 @@ import com.weicx.dao.IQuestion_libDao;
 import com.weicx.dao.IQuestion_typeDao;
 import com.weicx.domain.*;
 import com.weicx.service.IQuestionService;
+import com.weicx.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @ClassName QuestionServiceImpl
@@ -68,6 +70,96 @@ public class QuestionServiceImpl implements IQuestionService {
     @Override
     public List<Question_img> findImageByQuestionId(String questionLibId) throws Exception {
         return optionsDao.findImageByQuestionId(questionLibId);
+    }
+
+    /**
+     * 先删除表中信息，然后重新add，每个选项都生成UUID
+     * @param qid
+     * @param qns
+     * @param qtid
+     * @param qscore
+     * @param img_cnt
+     * @param imgPath
+     * @param imgw
+     * @param imgh
+     * @return
+     * @throws Exception
+     */
+//    @Override
+//    public String questionModify(String qid, String qns, Integer qtid, String qscore, Integer img_cnt, String imgPath, Integer imgw, Integer imgh) throws Exception {
+//        //1 modify question_lib
+//        question_libDao.updateQuestion(qid,qns,qtid,qscore);
+//        //2 delete question_img
+//        optionsDao.delteImgByQuestionId(qid);
+//        if (img_cnt>0){
+//            //todo 将上传的图片保存
+//            String imgUpLoadPath="upload/"+qid; //上传路径+试题id
+//            String imgTempUpLoadPath="upload/temp"+qid; //临时上传路径
+//            //imgUpLoadPath没有改文件则新建，有则打开该文件
+//
+//            for (int i = 0; i < img_cnt; i++) {
+//                optionsDao.saveImgByQuestionId(qid,imgPath,imgw,imgh);
+//            }
+//        }
+//        //3 delete options
+//        optionsDao.delteOptionByQid(qid);
+//        //4 delete answer
+//        optionsDao.delteAnswerByQid(qid);
+//        //5 add option and answer
+//        //下面是循环，每个选项都新生成optionUUid，如果该选项是答案，则保存answer
+//        String optionUUid = UUIDUtils.generateUuid8();
+//
+//        if (qtid==1||qtid==2 || qtid==5){  //单选、多选、判断，保存答案
+//            //获取id="as 保存
+//            optionsDao.saveAnswer(qid,optionUUid);
+//        }
+//
+//
+//        return null;
+//    }
+
+
+
+    @Override
+    public String questionModify(String qid, String qns, Integer qtid, String qscore, Integer img_cnt, String imgPath, Integer imgw, Integer imgh, List<Options> optionsList,String[] answerList) throws Exception {
+        //1 modify question_lib
+        question_libDao.updateQuestion(qid,qns,qtid,qscore);
+        //2 delete question_img
+        optionsDao.delteImgByQuestionId(qid);
+        if (img_cnt>0){ //题目图片
+            //todo 将上传的图片保存
+            String imgUpLoadPath="upload/"+qid; //上传路径+试题id
+            String imgTempUpLoadPath="upload/temp"+qid; //临时上传路径
+            //imgUpLoadPath没有改文件则新建，有则打开该文件
+
+            for (int i = 0; i < img_cnt; i++) {
+                //question_img
+                optionsDao.saveImgByQuestionId(qid,imgPath,imgw,imgh);
+            }
+        }
+        //3 delete options
+        optionsDao.delteOptionByQid(qid);
+        //4 delete answer
+        optionsDao.delteAnswerByQid(qid);
+        //5 add options and answer
+        //下面是循环，每个选项都新生成optionUUid，如果该选项是答案，则保存answer
+        for (Options option : optionsList){
+            option.setOptionid(UUIDUtils.generateUuid8());
+            if (option.getIs_img()==1){//有图片时
+                //todo 将上传的图片保存
+
+            }
+            optionsDao.saveOption(option);
+            if (qtid==1||qtid==2 || qtid==5){  //单选、多选、判断，保存答案
+                //获取id="as 保存
+                if (option.getAnswer()){
+                    optionsDao.saveAnswer(qid,option.getOptionid());
+                }
+
+            }
+
+        }
+        return "T:更新成功!";
     }
 
 
