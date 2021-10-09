@@ -78,8 +78,6 @@
                                             <th>岗位信息</th>
                                         </tr>
                                         </thead>
-
-
                                         <c:forEach items="${sectionsList}" var="section" varStatus="sectionNo">
                                             <tr data-tt-id="${sectionNo.index+1}">   <!--sectionNo.index 从0开始-->
                                                 <td colspan="1">${section.name}</td>      <!--显示列数-->
@@ -98,25 +96,7 @@
 
                                                 </tbody>
                                             </tr>
-                                        </c:forEach> 
-<%--                                        <c:forEach items="${sectionsList}" var="section" varStatus="sectionNo">--%>
-<%--                                            <tr data-tt-id="${sectionNo.index+1}">   <!--sectionNo.index 从0开始-->--%>
-<%--                                                <td colspan="1">${section.name}</td>      <!--显示列数-->--%>
-<%--                                                <tbody>--%>
-
-<%--                                                <c:forEach items="${section.stationList}" var="station"--%>
-<%--                                                           varStatus="stationNo"> <!--岗位-->--%>
-
-<%--                                                    <tr data-tt-id=${sectionNo.index+1}${stationNo.index+1} data-tt-parent-id="${sectionNo.index+1}">--%>
-<%--                                                        <td id="${station.id}"><span onclick="showQList(this)">${station.name}</span> </td>--%>
-<%--                                                    </tr>--%>
-<%--                                                </c:forEach>--%>
-
-<%--                                                </tbody>--%>
-<%--                                            </tr>--%>
-<%--                                        </c:forEach>--%>
-
-
+                                        </c:forEach>
                                     </table>
                                 </div>
                                 <!--数据列表/-->
@@ -133,26 +113,55 @@
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <!--工具栏-->
-<%--                            <div>--%>
-<%--                                <div class="col-md-1 title">工段</div>--%>
-<%--                                <div class="col-md-4 data">--%>
-<%--                                    <select class="form-control select2" style="width: 100%"--%>
-<%--                                            name="is_random" id="sectionName">--%>
-<%--                                    </select>--%>
+                            <input type="hidden" id="stationId" name="stationId">
+                            <div>
+                                <div class="col-md-1 title">题型</div>
+                                <div class="col-md-2 data">
+                                    <select class="form-control select2" style="width: 100%"
+                                            name="d_qtype" id="d_qtype">
+                                    </select>
+                                </div>
+                                <div class="col-md-1 title">分值</div>
+                                <div class="col-md-2 data">
+                                    <select class="form-control select2" style="width: 100%"
+                                            name="d_score" id="d_score">
+                                    </select>
+                                </div>
+                                <div class="col-md-1 title">来自</div>
+                                <div class="col-md-2 data">
+                                    <select class="form-control select2" style="width: 100%"
+                                            name="d_from" id="d_from">
+                                    </select>
+                                </div>
+                                <div class="col-md-3 data">
+                                    <button class="btn btn-info btn-sm" onclick="addQuestion();">新建</button>
+<%--                                    <button class="btn btn-danger btn-sm" onclick="delSelected();">删除</button>--%>
+                                    <button class="btn btn-primary btn-sm" onclick="search();">查询</button>
+                                </div>
+                            </div>
+<%--                            <div class="col-md-9" id="d_search">--%>
+<%--                                <div class="col-md-4 data search-item">--%>
+<%--                                    <label for="d_title">题目</label>--%>
+<%--                                    <input type="text" id="d_title" placeholder="包含此关键字的题目">--%>
 <%--                                </div>--%>
-<%--                                <div class="col-md-1 title">岗位</div>--%>
-<%--                                <div class="col-md-4 data">--%>
-<%--                                    <select class="form-control select2" style="width: 100%"--%>
-<%--                                            name="is_random" id="stationName">--%>
-<%--                                    </select>--%>
+<%--                                <div class="col-md-4 data search-item">--%>
+<%--                                    <label for="d_qtype">题型</label>--%>
+<%--                                    <select id="d_qtype" name="d_qtype" multiple></select>--%>
 <%--                                </div>--%>
-<%--                                <div class="col-md-2 data">--%>
-<%--                                    <button type="button" class="btn btn-default" title="查询">--%>
-<%--                                        <i class="fa fa-search"></i> 查询--%>
-<%--                                    </button>--%>
+<%--                                <div class="col-md-4 data search-item">--%>
+<%--                                    <label for="d_from">来自</label>--%>
+<%--                                    <select id="d_from" name="d_from" multiple></select>--%>
+<%--                                </div>--%>
+<%--                                <div class="search-item">--%>
+<%--                                    <label for="d_score">分值</label>--%>
+<%--                                    <select id="d_score" name="d_score" multiple></select>--%>
+<%--                                </div>--%>
+<%--                                <div class="pull-right">--%>
+<%--                                    <button class="btn btn-info btn-sm" onclick="addQuestion();">新建</button>--%>
+<%--                                    <button class="btn btn-danger btn-sm" onclick="delSelected();">删除</button>--%>
+<%--                                    <button class="btn btn-primary btn-sm" onclick="search();">查询</button>--%>
 <%--                                </div>--%>
 <%--                            </div>--%>
-
                             <!--工具栏/-->
                         </div>
 
@@ -184,17 +193,17 @@
                                     </thead>
                                     <tbody>
 
-                                    <tr id="trtemplate" style="text-align: center; ">
-                                        <td id="ids"></td>
-                                        <td id="no"></td>
-                                        <td id="qns"></td>
-                                        <td id="station"></td>
-                                        <td id="qtype"></td>
-                                        <td id="score"> </td>
-                                        <td id="owner"></td>
-                                        <td id="filename"></td>
-                                        <td id="function"></td>
-                                    </tr>
+                                        <tr id="trtemplate" style="text-align: center; ">
+                                            <td id="ids"></td>
+                                            <td id="no"></td>
+                                            <td id="qns"></td>
+                                            <td id="station"></td>
+                                            <td id="qtype"></td>
+                                            <td id="score"> </td>
+                                            <td id="owner"></td>
+                                            <td id="filename"></td>
+                                            <td id="function"></td>
+                                        </tr>
 <%--                                    <c:forEach items="${pageInfo.list}" var="questionLib">--%>
 <%--                                        &lt;%&ndash;										title  station_id  time   type  pass_score   owner  is_random  closed&ndash;%&gt;--%>
 <%--                                        <tr>--%>
@@ -315,42 +324,49 @@
         }
     }
 
-    function initStationBySection() {
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/manage/findAllSectionName.do',
-            // data:{'username':username, 'password':password},
-            datatype: 'json',
-            async: 'false',// false代表等待ajax执行完毕后才执行alert("ajax执行完毕")语句;想一个Ajax执行完后再执行另一个Ajax, 需要把async=false
-            success: function (data) {
-                $("#stationName").append("<option selected='selected'  value=0> </option>"); //显示空行
-                var selectSectionId = $("#sectionName").val();
-                for (var i = 0; i < data.length; i++) {  //第一层循环取到各个list
-                    var section = data[i];
-                    if (selectSectionId == section.id) {
-                        for (var j = 0; j < section.stationList.length; j++) {
-                            var station = section.stationList[j];
-                            $("#stationName").append("<option value=" + station.id + ">" + station.name + "</option>");
-                        }
+    <%--function initStationBySection() {--%>
+    <%--    $.ajax({--%>
+    <%--        type: 'POST',--%>
+    <%--        url: '${pageContext.request.contextPath}/manage/findAllSectionName.do',--%>
+    <%--        // data:{'username':username, 'password':password},--%>
+    <%--        datatype: 'json',--%>
+    <%--        async: 'false',// false代表等待ajax执行完毕后才执行alert("ajax执行完毕")语句;想一个Ajax执行完后再执行另一个Ajax, 需要把async=false--%>
+    <%--        success: function (data) {--%>
+    <%--            $("#stationName").append("<option selected='selected'  value=0> </option>"); //显示空行--%>
+    <%--            var selectSectionId = $("#sectionName").val();--%>
+    <%--            for (var i = 0; i < data.length; i++) {  //第一层循环取到各个list--%>
+    <%--                var section = data[i];--%>
+    <%--                if (selectSectionId == section.id) {--%>
+    <%--                    for (var j = 0; j < section.stationList.length; j++) {--%>
+    <%--                        var station = section.stationList[j];--%>
+    <%--                        $("#stationName").append("<option value=" + station.id + ">" + station.name + "</option>");--%>
+    <%--                    }--%>
 
-                    }
+    <%--                }--%>
 
-                }
-            },
-            error: function (data) {
-                alert("error..........")
-            }
+    <%--            }--%>
+    <%--        },--%>
+    <%--        error: function (data) {--%>
+    <%--            alert("error..........")--%>
+    <%--        }--%>
 
-        })
-    }
+    <%--    })--%>
+    <%--}--%>
 
-    $("#sectionName").change(function () {
-        initStationBySection()
+    <%--$("#sectionName").change(function () {--%>
+    <%--    initStationBySection()--%>
 
-    })
+    <%--})--%>
     function showQList(e){
         var station_id=$(e).parent().attr('id');
-        // iniSearchArea(station_id);
+        $("#stationId").val("");
+        $("#d_qtype").empty();
+        $("#d_score").empty();
+        $("#d_from").empty();
+        $("#dataList tbody ").remove();
+        // $("#trtemplate").remove();
+
+        iniSearchArea(station_id);
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/question/findByStation.do',
@@ -358,12 +374,14 @@
             datatype: 'json',
             async: 'false',
             success: function (data) {
-                debugger;
+                // debugger;
                 $("#trtemplate").cleanData;
+                //1,获取上面id为trtemplate的tr元素
                 var tr = $("#trtemplate");
                 for (var i = 0; i < data.list.length; i++){
                     var item = data.list[i];
                     var items = tr.clone();
+                    //循环遍历trtemplate的每一个td元素，并赋值
                     items.children("td").each(function (innerindex) {  <!--innerindex列序号，从0开始-->
                         switch (innerindex) {
                             case 0:
@@ -376,16 +394,16 @@
                                 $(this).html(item.qns);
                                 break;
                             case 3:
-                                $(this).html(item.station.name);
+                                $(this).html(data.list[i].station.name);
                                 break;;
                             case 4:
-                                $(this).html(item.qtype.name);
+                                $(this).html(data.list[i].qtype.name);
                                 break;
                             case 5:
                                 $(this).html(item.score);
                                 break;
                             case 6:
-                                $(this).html(item.owner.name);
+                                $(this).html(data.list[i].owner.name);
                                 break;
                             case 7:
                                 $(this).html(item.filename);
@@ -402,6 +420,7 @@
                         }
 
                     });
+                    //把克隆好的tr追加原来的tr后面
                     items.insertAfter(tr);
                 }
 
@@ -411,6 +430,37 @@
             }
         })
 
+    }
+    function iniSearchArea(station_id){
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/question/iniData.do',
+            data:{'station_id':station_id},
+            datatype: 'json',
+            async: 'false',
+            success: function (data) {
+                $("#stationId").val(station_id);
+                $("#d_qtype").append("<option selected='selected'  value=0> </option>"); //显示空行
+                for (var i = 0; i < data.typeList.length; i++) {  //第一层循环取到各个list
+                    var qtype = data.typeList[i];
+                    $("#d_qtype").append("<option value=" + qtype.qtid + ">" + qtype.name + "</option>");
+                }
+                $("#d_score").append("<option selected='selected'  value=0> </option>"); //显示空行
+                for (var i = 0; i < data.scoreList.length; i++) {  //第一层循环取到各个list
+                    var score = data.scoreList[i];
+                    $("#d_score").append("<option value=" + score + ">" + score + "</option>");
+                }
+                $("#d_from").append("<option selected='selected'  value=0> </option>"); //显示空行
+                for (var i = 0; i < data.fileNameList.length; i++) {  //第一层循环取到各个list
+                    var fromFileName = data.fileNameList[i];
+                    $("#d_from").append("<option value=" + fromFileName + ">" + fromFileName + "</option>");
+                }
+
+            },
+            error: function (data) {
+                alert("error"+data);
+            }
+        })
     }
     $(document).ready(function () {
 
@@ -447,6 +497,9 @@
             $(this).data("clicks", !clicks);
         });
 
+        function search(){
+
+        }
         function initSection() {
             //ajax异常处理：controller加@ResponseBody注解；js使用JSON.stringify(data)解析
             $.ajax({
@@ -459,10 +512,10 @@
                     // alert(JSON.stringify(data));  //[{"id":5,"name":"管制口","stationList":[]}]
                     // var outTrxObj=JSON.stringify(data);
                     // alert(data);
-                    $("#sectionName").append("<option selected='selected'  value=0> </option>"); //显示空行
+                    $("#d_from").append("<option selected='selected'  value=0> </option>"); //显示空行
                     for (var i = 0; i < data.length; i++) {  //第一层循环取到各个list
-                        var section = data[i];
-                        $("#sectionName").append("<option value=" + section.id + ">" + section.name + "</option>");
+                        var fromFileName = data[i];
+                        $("#d_from").append("<option value=" + fromFileName + ">" + fromFileName + "</option>");
                     }
                 },
                 error: function (data) {
@@ -472,8 +525,8 @@
             })
         }
 
-        // 初始化部门信息
-        initSection();
+        <%--// 初始化部门信息--%>
+        <%--initSection();--%>
 
     });
 

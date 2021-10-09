@@ -4,9 +4,11 @@ package com.weicx.controller;/**
  */
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.PageInfo;
 import com.weicx.domain.*;
 import com.weicx.service.IQuestionService;
+import com.weicx.service.tx.QuestionService.QuestionOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,7 +78,24 @@ public class QuestionController {
         List<Question_lib> questionLibs = questionService.findByStation(station_id,page,size);
         //PageInfo就是一个分页Bean
         PageInfo<Question_lib> questionLibPageInfo = new PageInfo(questionLibs);
-        return JSONObject.toJSONString(questionLibPageInfo);
+        //禁止循环引用，避免JSON解析错误
+        return JSONObject.toJSONString(questionLibPageInfo, SerializerFeature.DisableCircularReferenceDetect);
+    }
+
+    /**
+     * init 试题列表search area Data
+     * @param station_id
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/iniData.do")
+    public String iniData(@RequestParam(name = "station_id",required = true) String station_id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        QuestionOut initData = questionService.initData(station_id);
+
+
+        return JSONObject.toJSONString(initData);
     }
 
 

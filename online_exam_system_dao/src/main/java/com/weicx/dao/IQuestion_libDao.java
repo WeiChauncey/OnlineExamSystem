@@ -78,4 +78,10 @@ public interface IQuestion_libDao {
 
     @Update("UPDATE question_lib SET qns= #{qns} ,qtype=#{qtype} ,score=#{qscore}  WHERE qid=#{qid} ")
     void updateQuestion(@Param("qid")String qid, @Param("qns") String qns, @Param("qtype") Integer qtid, @Param("qscore") String qscore) throws Exception;
+
+    @Select("select distinct filename from Question_lib where station = #{station_id}")
+    List<String> findFileNameByStation(String station_id) throws Exception;
+
+    @Select("select distinct score filename from Question_lib where station = #{station_id}")
+    List<Integer> findScoreByStation(String station_id) throws Exception;
 }

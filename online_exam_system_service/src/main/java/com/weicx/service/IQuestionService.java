@@ -1,6 +1,7 @@
 package com.weicx.service;
 
 import com.weicx.domain.*;
+import com.weicx.service.tx.QuestionService.QuestionOut;
 
 import java.util.List;
 
@@ -35,4 +36,7 @@ public interface IQuestionService {
 
     //修改试题
     String questionModify(String qid, String qns, Integer qtid, String qscore, Integer img_cnt, String imgPath, Integer imgw, Integer imgh, List<Options> optionsList, String[] answerList) throws Exception;
+
+    //通过岗位ID，获取不同的试题类型、文件名、分数
+    QuestionOut initData(String station_id) throws Exception;
 }

@@ -9,6 +9,7 @@ import com.weicx.dao.IQuestion_libDao;
 import com.weicx.dao.IQuestion_typeDao;
 import com.weicx.domain.*;
 import com.weicx.service.IQuestionService;
+import com.weicx.service.tx.QuestionService.QuestionOut;
 import com.weicx.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,9 @@ public class QuestionServiceImpl implements IQuestionService {
     private IQuestion_libDao question_libDao ;
     @Autowired
     private IOptionsDao optionsDao ;
-
     @Autowired
     private IQuestion_typeDao question_typeDao;
+
     @Override
     public List<Question_lib> findAll(int page, int size) throws Exception {
         //
@@ -160,6 +161,19 @@ public class QuestionServiceImpl implements IQuestionService {
 
         }
         return "T:更新成功!";
+    }
+
+    @Override
+    public QuestionOut initData(String station_id) throws Exception {
+        QuestionOut questionOut = new QuestionOut();
+        List<Question_type> questoinTypeList = question_typeDao.findByStationId(station_id);
+        List<String> fileNameList = question_libDao.findFileNameByStation(station_id);
+        List<Integer> scoreList = question_libDao.findScoreByStation(station_id);
+        questionOut.setTypeList(questoinTypeList);
+        questionOut.setFileNameList(fileNameList);
+        questionOut.setScoreList(scoreList);
+
+        return questionOut;
     }
 
 
