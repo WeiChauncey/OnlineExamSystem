@@ -49,6 +49,10 @@ public interface IStationDao {
     List<Station> findPowerStations(String userId) throws Exception;
 
     @Select("select * from station where id in (select station from user_qmakers where uid = #{userId})")
+    @Results({
+            @Result(id = true, column = "id", property = "id"),
+            @Result(column = "section_id", property = "section_id", one = @One(select = "com.weicx.dao.ISectionsDao.findById"))
+    })
     List<Station> findQmakerStations(String userId) throws Exception;
 
 }

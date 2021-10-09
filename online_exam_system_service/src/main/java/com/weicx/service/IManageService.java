@@ -24,4 +24,6 @@ public interface IManageService {
     String deleteSection(String sectionId) throws Exception;
 
     String modifySection(String sectionId, String sectionName) throws Exception;
+
+    List<Station> findSationByUserName(String username) throws Exception;
 }

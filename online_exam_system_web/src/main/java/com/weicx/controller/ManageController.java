@@ -13,6 +13,9 @@ import com.weicx.domain.Station;
 import com.weicx.service.IManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,11 +98,24 @@ public class ManageController {
             return "failer";
         }
     }
-    @RequestMapping("findAllSectionQuestionLib.do")
-    public ModelAndView findAllSectionQuestionLib() throws Exception {
+
+    /**
+     * 试题列表界面：
+     * 遍历所有工段， 通过userNmae查询该人出题岗位
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("findSectionQuestionLib.do")
+    public ModelAndView findSectionQuestionLib() throws Exception {
         ModelAndView mv = new ModelAndView();
-        List<Sections> sectionsList = manageService.findAllSection();
-        mv.addObject("sectionsList",sectionsList);
+        //获取当前操作的用户 ，通过springSecurity框架获得
+        SecurityContext context = SecurityContextHolder.getContext(); //从上下文中获取当前用户
+        User user = (User) context.getAuthentication().getPrincipal(); //获取springSecurity内部的user类
+        String username = user.getUsername();
+        List<Sections> allSection = manageService.findAllSection();
+        List<Station> stationList = manageService.findSationByUserName(username);
+        mv.addObject("sectionsList",allSection);
+        mv.addObject("stationList",stationList);
         mv.setViewName("question-lib-page-list-tree");
         return mv;
     }

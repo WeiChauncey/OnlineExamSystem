@@ -5,13 +5,16 @@ package com.weicx.service.impl;/**
 
 import com.weicx.dao.ISectionsDao;
 import com.weicx.dao.IStationDao;
+import com.weicx.dao.IUsersDao;
 import com.weicx.domain.Sections;
 import com.weicx.domain.Station;
+import com.weicx.domain.Users;
 import com.weicx.service.IManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +33,9 @@ public class ManageServiceImpl implements IManageService {
 
     @Autowired
     private ISectionsDao sectionsDao;
+
+    @Autowired
+    private IUsersDao usersDao;
 
 
     @Override
@@ -78,5 +84,25 @@ public class ManageServiceImpl implements IManageService {
         }else{
             return "未查询到该工段信息";
         }
+    }
+
+    /**
+     *
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Station> findSationByUserName(String username) throws Exception {
+        //1 通过userName，查询出userId
+        Users userInfo = usersDao.findByName(username);
+        String userId = userInfo.getId();
+        //2 通过userId 查询user_qmakers的出题岗位
+        List<Station> qmakerStations = stationDao.findQmakerStations(userId);
+
+
+
+
+        return qmakerStations;
     }
 }

@@ -66,4 +66,7 @@ public interface IUsersDao {
 
     @Insert("insert into user_qmakers (uid,station) values (#{userId},#{mid})")
     void insertUserMaker(@Param("userId")String userId, @Param("mid") Integer mid) throws Exception;
+
+    @Select("select * from Users where  name=#{username}")
+    Users findByName(String username) throws Exception;
 }

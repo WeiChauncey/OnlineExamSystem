@@ -9,7 +9,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="${pageContext.request.contextPath}/img/user2-160x160.jpg"
+                <img src="${pageContext.request.contextPath}/img/avatar5.png"
                      class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
@@ -56,7 +56,7 @@
                     </a></li>
                     <li id="question-listtree"><a
                     <%--						href="${pageContext.request.contextPath}/question/findAll.do?page=1&size=6">--%>
-                            href="${pageContext.request.contextPath}/manage/findAllSectionQuestionLib.do">
+                            href="${pageContext.request.contextPath}/manage/findSectionQuestionLib.do">
                         <i class="fa fa-circle-o"></i> 试题列表tree
                     </a></li>
                     <li id="question-add"><a

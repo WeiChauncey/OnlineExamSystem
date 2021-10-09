@@ -15,10 +15,10 @@ import java.util.List;
  * @Version 1.0
  */
 public class Station {
-   private Integer id              ; //
+   private Integer id              ; //岗位ID     KEY
    private String name	 ;            //岗位名
-   private Sections section_id	 ; //工段ID
-    private List<Users> usersList; //用户信息
+   private Sections section_id	 ;   //工段ID
+    private List<Users> usersList;   //用户信息
 
     public Station() {
     }
