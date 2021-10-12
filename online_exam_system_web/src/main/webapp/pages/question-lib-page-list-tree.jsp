@@ -39,7 +39,7 @@
     <script type="text/javascript" src="../plugins/jqGrid/js/i18n/grid.locale-cn.js"></script>
 
     <!-- 本页面初始化用到的js包，创建jqGrid的代码就在里面 -->
-    <script type="text/javascript" src="../js/3_Question/question-lib-page-list-tree.js"></script>
+<%--    <script type="text/javascript" src="../js/3_Question/question-lib-page-list-tree.js"></script>--%>
 
 </head>
 
@@ -217,7 +217,7 @@
                                         <th class="sorting_desc sorting_desc_disabled">导入文件</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tableListBody">
 
                                         <tr id="trtemplate" style="text-align: center; ">
                                             <td id="ids"></td>
@@ -389,7 +389,7 @@
         $("#d_qtype").empty();
         $("#d_score").empty();
         $("#d_from").empty();
-        $("#dataList tbody ").remove();
+        // $("#dataList tbody ").remove();
         // $("#trtemplate").remove();
 
         iniSearchArea(station_id);
@@ -401,7 +401,8 @@
             async: 'false',
             success: function (data) {
                 // debugger;
-                $("#trtemplate").cleanData;
+                //每次刷入数据前，先清空数据
+                $("#tableListBody  tr:not(:first)").html("");
                 //1,获取上面id为trtemplate的tr元素
                 var tr = $("#trtemplate");
                 for (var i = 0; i < data.list.length; i++){
