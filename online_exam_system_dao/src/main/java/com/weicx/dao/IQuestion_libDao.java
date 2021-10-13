@@ -72,7 +72,6 @@ public interface IQuestion_libDao {
             @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
             @Result(column = "qid", property = "Quizs", many = @Many(select = "com.weicx.dao.IQuizDao.findByQuestionLibId")),
 
-
     })
     List<Question_lib> findByStation(String station_id) throws Exception;
 
@@ -84,4 +83,15 @@ public interface IQuestion_libDao {
 
     @Select("select distinct score filename from Question_lib where station = #{station_id}")
     List<Integer> findScoreByStation(String station_id) throws Exception;
+
+    @Select("select * from Question_lib where station = #{station}  and  qtype = #{qtype}   and  score = #{score}    and  filename = #{filename} ")
+    @Results({
+            @Result(id = true, column = "qid", property = "qid"),
+            @Result(column = "station", property = "station", one = @One(select = "com.weicx.dao.IStationDao.findById")),
+            @Result(column = "qtype", property = "qtype", one = @One(select = "com.weicx.dao.IQuestion_typeDao.findById")),
+            @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
+            @Result(column = "qid", property = "Quizs", many = @Many(select = "com.weicx.dao.IQuizDao.findByQuestionLibId")),
+
+    })
+    List<Question_lib> findBySearch(@Param("station")String station_id, @Param("qtype") Integer qtype, @Param("score") Integer score, @Param("filename") String from) throws Exception;
 }

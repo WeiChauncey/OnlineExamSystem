@@ -82,6 +82,15 @@ public class QuestionController {
         return JSONObject.toJSONString(questionLibPageInfo, SerializerFeature.DisableCircularReferenceDetect);
     }
 
+    @ResponseBody
+    @RequestMapping("/findBySearch.do")
+    public String findBySearch(@RequestParam(name = "station_id",required = true) String station_id,@RequestParam(name = "d_qtype" ) Integer qtype ,@RequestParam(name = "d_score") Integer score,@RequestParam(name = "d_from") String from) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        List<Question_lib> questionLibs = questionService.findBySearch(station_id,qtype,score,from);
+        //禁止循环引用，避免JSON解析错误
+        return JSONObject.toJSONString(questionLibs, SerializerFeature.DisableCircularReferenceDetect);
+    }
+
     /**
      * init 试题列表search area Data
      * @param station_id

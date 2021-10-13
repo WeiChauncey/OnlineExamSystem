@@ -149,12 +149,12 @@
                                     </select>
                                 </div>
                                 <div class="col-md-1 title">来自</div>
-                                <div class="col-md-2 data">
+                                <div class="col-md-3 data">
                                     <select class="form-control select2" style="width: 100%"
                                             name="d_from" id="d_from">
                                     </select>
                                 </div>
-                                <div class="col-md-3 data">
+                                <div class="col-md-2 data">
                                     <button class="btn btn-info btn-sm" onclick="addQuestion();">新建</button>
 <%--                                    <button class="btn btn-danger btn-sm" onclick="delSelected();">删除</button>--%>
                                     <button class="btn btn-primary btn-sm" onclick="search();">查询</button>
@@ -489,6 +489,78 @@
             }
         })
     }
+    function search(){
+        var station_id = $("#stationId").val()
+        //下拉框默认值为0
+        var d_qtype =  $("#d_qtype").val();
+        var d_score =  $("#d_score").val();
+        var d_from  =  $("#d_from").val();
+        $.ajax({
+            type: 'POST',
+            data:{'station_id':station_id, 'd_qtype':d_qtype,'d_score':d_score,'d_from':d_from},
+            url: '${pageContext.request.contextPath}/question/findBySearch.do',
+            datatype: 'json',
+            async: 'false',
+            success: function (data) {
+                // debugger;
+                //每次刷入数据前，先清空数据
+                $("#tableListBody  tr:not(:first)").html("");
+                //1,获取上面id为trtemplate的tr元素
+                var tr = $("#trtemplate");
+                for (var i = 0; i < data.length; i++){
+                    var item = data[i];
+                    var items = tr.clone();
+                    //循环遍历trtemplate的每一个td元素，并赋值
+                    items.children("td").each(function (innerindex) {  <!--innerindex列序号，从0开始-->
+                        switch (innerindex) {
+                            case 0:
+                                $(this).html("<input name=\"ids\" type=\"checkbox\">");
+                                break;
+                            case 1:
+                                $(this).html(data.length-i);
+                                break;
+                            case 2:
+                                $(this).html(item.qns);
+                                break;
+                            case 3:
+                                $(this).html(data[i].station.name);
+                                break;;
+                            case 4:
+                                $(this).html(data[i].qtype.name);
+                                break;
+                            case 5:
+                                $(this).html(item.score);
+                                break;
+                            case 6:
+                                $(this).html(data[i].owner.name);
+                                break;
+                            case 7:
+                                $(this).html(item.filename);
+                                break;
+                            case 8:
+                                $(this).html("                                            <td class=\"text-center\">\n" +
+                                    "                                                <button type=\"button\" class=\"btn bg-olive btn-xs\"\n" +
+                                    "                                                        onclick=\"location.href='${pageContext.request.contextPath}/question/findById.do?id=${questionLib.qid}'\">\n" +
+                                    "                                                    修改\n" +
+                                    "                                                </button>\n" +
+                                    "                                                <button type=\"button\" class=\"btn bg-olive btn-xs\">删除</button>\n" +
+                                    "                                            </td>");
+                                break;
+                        }
+
+                    });
+                    //把克隆好的tr追加原来的tr后面
+                    items.insertAfter(tr);
+                }
+
+            },
+            error: function (data) {
+                alert("error..........")
+            }
+        })
+
+
+    }
     $(document).ready(function () {
 
         /*table tree*/
@@ -524,9 +596,7 @@
             $(this).data("clicks", !clicks);
         });
 
-        function search(){
 
-        }
         function initSection() {
             //ajax异常处理：controller加@ResponseBody注解；js使用JSON.stringify(data)解析
             $.ajax({

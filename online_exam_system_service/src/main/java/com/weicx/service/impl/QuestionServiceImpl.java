@@ -176,5 +176,15 @@ public class QuestionServiceImpl implements IQuestionService {
         return questionOut;
     }
 
+    @Override
+    public List<Question_lib> findBySearch(String station_id, Integer qtype, Integer score, String from) throws Exception {
+        //todo :配置动态SQL
+        String sql ="";
+        if (qtype != 0){
+            sql = "and ";
+        }
+        return question_libDao.findBySearch(station_id,qtype,score,from);
+    }
+
 
 }

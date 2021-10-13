@@ -39,4 +39,6 @@ public interface IQuestionService {
 
     //通过岗位ID，获取不同的试题类型、文件名、分数
     QuestionOut initData(String station_id) throws Exception;
+
+    List<Question_lib> findBySearch(String station_id, Integer qtype, Integer score, String from) throws Exception;
 }
