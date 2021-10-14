@@ -20,26 +20,6 @@
             content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
             name="viewport">
 
-    <!-- jqGrid组件基础样式包-必要 -->
-    <link rel="stylesheet" href="../plugins/jqGrid/css/ui.jqgrid.css" />
-
-    <!-- jqGrid主题包-非必要 -->
-    <!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
-    <link rel="stylesheet" href="../plugins/jqGrid/css/css/redmond/jquery-ui-1.8.16.custom.css" />
-
-    <!-- jquery插件包-必要 -->
-    <!-- 这个是所有jquery插件的基础，首先第一个引入 -->
-    <script type="text/javascript" src="../plugins/jqGrid/js/jquery-1.7.1.js"></script>
-
-    <!-- jqGrid插件包-必要 -->
-    <script type="text/javascript" src="../plugins/jqGrid/js/jquery.jqGrid.src.js"></script>
-
-    <!-- jqGrid插件的多语言包-非必要 -->
-    <!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
-    <script type="text/javascript" src="../plugins/jqGrid/js/i18n/grid.locale-cn.js"></script>
-
-    <!-- 本页面初始化用到的js包，创建jqGrid的代码就在里面 -->
-<%--    <script type="text/javascript" src="../js/3_Question/question-lib-page-list-tree.js"></script>--%>
 
 </head>
 
@@ -155,34 +135,11 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2 data">
-                                    <button class="btn btn-info btn-sm" onclick="addQuestion();">新建</button>
-<%--                                    <button class="btn btn-danger btn-sm" onclick="delSelected();">删除</button>--%>
+<%--                                    <button class="btn btn-info btn-sm" onclick="addQuestion();">新建</button>--%>
                                     <button class="btn btn-primary btn-sm" onclick="search();">查询</button>
+                                    <button class="btn btn-danger btn-sm" onclick="delSelected();">删除</button>
                                 </div>
                             </div>
-<%--                            <div class="col-md-9" id="d_search">--%>
-<%--                                <div class="col-md-4 data search-item">--%>
-<%--                                    <label for="d_title">题目</label>--%>
-<%--                                    <input type="text" id="d_title" placeholder="包含此关键字的题目">--%>
-<%--                                </div>--%>
-<%--                                <div class="col-md-4 data search-item">--%>
-<%--                                    <label for="d_qtype">题型</label>--%>
-<%--                                    <select id="d_qtype" name="d_qtype" multiple></select>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-md-4 data search-item">--%>
-<%--                                    <label for="d_from">来自</label>--%>
-<%--                                    <select id="d_from" name="d_from" multiple></select>--%>
-<%--                                </div>--%>
-<%--                                <div class="search-item">--%>
-<%--                                    <label for="d_score">分值</label>--%>
-<%--                                    <select id="d_score" name="d_score" multiple></select>--%>
-<%--                                </div>--%>
-<%--                                <div class="pull-right">--%>
-<%--                                    <button class="btn btn-info btn-sm" onclick="addQuestion();">新建</button>--%>
-<%--                                    <button class="btn btn-danger btn-sm" onclick="delSelected();">删除</button>--%>
-<%--                                    <button class="btn btn-primary btn-sm" onclick="search();">查询</button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
                             <!--工具栏/-->
                         </div>
 
@@ -385,6 +342,9 @@
     <%--})--%>
     function showQList(e){
         var station_id=$(e).parent().attr('id');
+        if (station_id == null){
+            station_id = $("#stationId").val()
+        }
         $("#stationId").val("");
         $("#d_qtype").empty();
         $("#d_score").empty();
@@ -408,11 +368,12 @@
                 for (var i = 0; i < data.list.length; i++){
                     var item = data.list[i];
                     var items = tr.clone();
+
                     //循环遍历trtemplate的每一个td元素，并赋值
                     items.children("td").each(function (innerindex) {  <!--innerindex列序号，从0开始-->
                         switch (innerindex) {
                             case 0:
-                                $(this).html("<input name=\"ids\" type=\"checkbox\">");
+                                $(this).html( "<input name=\"ids\" type=\"checkbox\" >");
                                 break;
                             case 1:
                                 $(this).html(data.list.length-i);
@@ -436,13 +397,11 @@
                                 $(this).html(item.filename);
                                 break;
                             case 8:
-                                $(this).html("                                            <td class=\"text-center\">\n" +
-                                    "                                                <button type=\"button\" class=\"btn bg-olive btn-xs\"\n" +
-                                    "                                                        onclick=\"location.href='${pageContext.request.contextPath}/question/findById.do?id=${questionLib.qid}'\">\n" +
-                                    "                                                    修改\n" +
-                                    "                                                </button>\n" +
-                                    "                                                <button type=\"button\" class=\"btn bg-olive btn-xs\">删除</button>\n" +
-                                    "                                            </td>");
+                                $(this).html("   <td class=\"text-center\">\n" +
+                                    "      <button type=\"button\" class=\"btn bg-olive btn-xs\" onclick=\"location.href='${pageContext.request.contextPath}/question/findById.do?id="+item.qid+"'\">修改</button>\n" +
+                                    "      <button type=\"button\" class=\"btn bg-olive btn-xs\"  onclick=\"delQuestion(\'"+item.qid+"\')\">删除</button>\n" +
+                                    "  </td>")
+
                                 break;
                         }
 
@@ -514,10 +473,12 @@
                     items.children("td").each(function (innerindex) {  <!--innerindex列序号，从0开始-->
                         switch (innerindex) {
                             case 0:
-                                $(this).html("<input name=\"ids\" type=\"checkbox\">");
+                                // $(this).html("<input name=\"ids\" type=\"checkbox\">");
+                                $(this).html(item.qid );
                                 break;
                             case 1:
-                                $(this).html(data.length-i);
+                                // $(this).html(data.length-i);
+                                $(this).html(item.qid);
                                 break;
                             case 2:
                                 $(this).html(item.qns);
@@ -538,13 +499,10 @@
                                 $(this).html(item.filename);
                                 break;
                             case 8:
-                                $(this).html("                                            <td class=\"text-center\">\n" +
-                                    "                                                <button type=\"button\" class=\"btn bg-olive btn-xs\"\n" +
-                                    "                                                        onclick=\"location.href='${pageContext.request.contextPath}/question/findById.do?id=${questionLib.qid}'\">\n" +
-                                    "                                                    修改\n" +
-                                    "                                                </button>\n" +
-                                    "                                                <button type=\"button\" class=\"btn bg-olive btn-xs\">删除</button>\n" +
-                                    "                                            </td>");
+                                $(this).html("   <td class=\"text-center\">\n" +
+                                    "      <button type=\"button\" class=\"btn bg-olive btn-xs\" onclick=\"location.href='${pageContext.request.contextPath}/question/findById.do?id="+item.qid+"'\">修改</button>\n" +
+                                    "      <button type=\"button\" class=\"btn bg-olive btn-xs\"  onclick=\"delQuestion(\'"+item.qid+"\')\">删除</button>\n" +
+                                    "  </td>")
                                 break;
                         }
 
@@ -560,6 +518,44 @@
         })
 
 
+    }
+    <%--$("#deleteQuestion").click(function () {--%>
+    <%--    $.ajax({--%>
+    <%--        type: 'POST',--%>
+    <%--        data:{'id':e,},--%>
+    <%--        url: '${pageContext.request.contextPath}/question/deleteById.do',--%>
+    <%--        datatype: 'json',--%>
+    <%--        async: 'false',--%>
+    <%--        success: function (data) {--%>
+    <%--            alert(data)--%>
+    <%--            alert("success..........")--%>
+    <%--        },--%>
+    <%--        error: function (data) {--%>
+    <%--            alert("error..........")--%>
+    <%--        }--%>
+    <%--    })--%>
+    <%--})--%>
+    // $.(#deleteQuestion).onclick
+    function delQuestion(e){
+        // var td = $(this).find("td");// 找到td元素
+        // var lo_id = td[1].innerHTML;// 指定需要获取元素的下标即可
+        // alert(lo_id);
+        $.ajax({
+            type: 'POST',
+            data:{'id':e },
+            url: '${pageContext.request.contextPath}/question/deleteById.do',
+            datatype: 'json',
+            async: 'false',
+            success: function (data) {
+
+                alert("success.........."),
+                showQList()
+
+            },
+            error: function (data) {
+                alert("error..........")
+            }
+        })
     }
     $(document).ready(function () {
 

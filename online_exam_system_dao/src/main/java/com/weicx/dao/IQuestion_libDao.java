@@ -94,4 +94,7 @@ public interface IQuestion_libDao {
 
     })
     List<Question_lib> findBySearch(@Param("station")String station_id, @Param("qtype") Integer qtype, @Param("score") Integer score, @Param("filename") String from) throws Exception;
+
+    @Delete("delete from question_lib where qid=#{qid}")
+    void deleteByQid(String qid) throws Exception;
 }

@@ -41,8 +41,6 @@ public interface IOptionsDao {
     @Delete("DELETE FROM options WHERE qid=#{qid}")
     void delteOptionByQid(String qid) throws Exception;
 
-    @Delete("delete from answer where qid=#{qid}")
-    void delteAnswerByQid(String qid) throws Exception;
 
     @Insert("INSERT INTO answer VALUES (#{qid},#{$ansid})")
     void saveAnswer(@Param("qid")String qid,@Param("$ansid") String optionUUid) throws Exception;

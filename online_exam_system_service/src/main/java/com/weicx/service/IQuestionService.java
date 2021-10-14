@@ -41,4 +41,6 @@ public interface IQuestionService {
     QuestionOut initData(String station_id) throws Exception;
 
     List<Question_lib> findBySearch(String station_id, Integer qtype, Integer score, String from) throws Exception;
+
+    String deleteById(String questionLibId) throws Exception;
 }

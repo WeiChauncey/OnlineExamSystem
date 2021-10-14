@@ -91,6 +91,16 @@ public class QuestionController {
         return JSONObject.toJSONString(questionLibs, SerializerFeature.DisableCircularReferenceDetect);
     }
 
+
+    @ResponseBody
+    @RequestMapping("/deleteById.do")
+    public String deleteById(@RequestParam(name = "id",required = true) String questionLibId) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        String  replay = questionService.deleteById(questionLibId);
+//        return "redirect:findByStation.do";
+        return JSONObject.toJSONString(replay);
+    }
+
     /**
      * init 试题列表search area Data
      * @param station_id

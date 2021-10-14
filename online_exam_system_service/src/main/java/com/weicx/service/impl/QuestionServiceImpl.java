@@ -4,6 +4,7 @@ package com.weicx.service.impl;/**
  */
 
 import com.github.pagehelper.PageHelper;
+import com.weicx.dao.IAnswerDao;
 import com.weicx.dao.IOptionsDao;
 import com.weicx.dao.IQuestion_libDao;
 import com.weicx.dao.IQuestion_typeDao;
@@ -34,6 +35,8 @@ public class QuestionServiceImpl implements IQuestionService {
     private IOptionsDao optionsDao ;
     @Autowired
     private IQuestion_typeDao question_typeDao;
+    @Autowired
+    private IAnswerDao answerDao;
 
     @Override
     public List<Question_lib> findAll(int page, int size) throws Exception {
@@ -141,7 +144,7 @@ public class QuestionServiceImpl implements IQuestionService {
         //3 delete options
         optionsDao.delteOptionByQid(qid);
         //4 delete answer
-        optionsDao.delteAnswerByQid(qid);
+        answerDao.deleteAnswerByQid(qid);
         //5 add options and answer
         //下面是循环，每个选项都新生成optionUUid，如果该选项是答案，则保存answer
         for (Options option : optionsList){
@@ -184,6 +187,25 @@ public class QuestionServiceImpl implements IQuestionService {
             sql = "and ";
         }
         return question_libDao.findBySearch(station_id,qtype,score,from);
+    }
+
+    @Override
+    public String deleteById(String qid) throws Exception {
+        try {
+            //1、remove该试题上传的图片信息
+
+            //2 delete question_img
+            optionsDao.delteImgByQuestionId(qid);
+            //3 delete options
+            optionsDao.delteOptionByQid(qid);
+            //4 delete answer
+            answerDao.deleteAnswerByQid(qid);
+            //4 delete questionlib
+            question_libDao.deleteByQid(qid);
+        }catch (Exception e){
+            return "NG";
+        }
+        return "OK";
     }
 
 

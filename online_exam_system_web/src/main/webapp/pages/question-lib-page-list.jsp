@@ -207,7 +207,7 @@
                                                 <td>${questionLib.filename }</td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn bg-olive btn-xs" onclick="location.href='${pageContext.request.contextPath}/question/findById.do?id=${questionLib.qid}'">修改</button>
-                                                    <button type="button" class="btn bg-olive btn-xs">删除</button>
+                                                    <button type="button" class="btn bg-olive btn-xs"  onclick="delQuestion(${questionLib.qid})">删除</button>
                                                 </td>
                                             </tr>
                                         </c:forEach>
