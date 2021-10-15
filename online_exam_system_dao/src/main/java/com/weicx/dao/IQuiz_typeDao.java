@@ -12,4 +12,10 @@ public interface IQuiz_typeDao {
 
     @Select("select * from Quiz_type where id = #{id}")
     Quiz_type findById(String id) throws Exception;
+
+
+    @Select("select * from Quiz_type where title = #{title}")
+    Quiz_type findByTitle(String title) throws Exception;
+
+
 }

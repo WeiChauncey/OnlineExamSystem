@@ -2,6 +2,7 @@ package com.weicx.controller;
 
 import com.weicx.domain.Quiz;
 import com.weicx.service.IQuizService;
+import com.weicx.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,12 +49,35 @@ public class QuizController {
 //       保存成功后，重新查询一次
         return "redirect:findAll.do";
     }
+
+    /**
+     * 试卷详情
+     * @param quizId
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/findById.do")
     public ModelAndView findById(@RequestParam(name = "id",required = true) String quizId) throws Exception {
         ModelAndView mv = new ModelAndView();
         Quiz quizExam = quizService.findById(quizId);
         mv.addObject("quizExam",quizExam);
-        mv.setViewName("quiz-exam");  //返回的web页面
+        mv.setViewName("quiz-info");  //返回的web页面
+        return mv;
+    }
+
+
+    /**
+     * 考试入口，查询待考试试卷
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/findExamByUser.do")
+    public ModelAndView findExamByUser() throws Exception {
+        ModelAndView mv = new ModelAndView();
+        String username = UserUtils.findUserName();
+        List<Quiz> examList = quizService.findExamByUser(username);
+        mv.addObject("quizList",examList);
+        mv.setViewName("exam-list");  //返回的web页面
         return mv;
     }
 }

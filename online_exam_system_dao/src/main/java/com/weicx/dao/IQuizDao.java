@@ -18,8 +18,6 @@ public interface IQuizDao {
             @Result(id = true, column = "eid", property = "eid"),
             @Result(column = "station_id", property = "station", one = @One(select = "com.weicx.dao.IStationDao.findById")),
             @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
-            @Result(column = "type", property = "type", one = @One(select = "com.weicx.dao.IQuiz_typeDao.findById")),
-
     })
     List<Quiz> findAll() throws Exception;
 
@@ -61,5 +59,28 @@ public interface IQuizDao {
      * @return
      */
     @Select("select auto_eid from user_quiz  where uid = #{usersid} and eid = #{quizId}")
-    String  findAutoQuizId(@Param("usersid") String usersid ,@Param("quizId") String quizId);
+    String  findAutoQuizId(@Param("usersid") String usersid ,@Param("quizId") String quizId) throws Exception;
+
+    /**
+     * 通过UserName获取对用岗位user_stations，找到对应的试卷
+     * @param userId
+     * @return
+     */
+    @Select("select * from quiz where station_id in (select station from user_stations where uid = #{userId})")
+    @Results({
+            @Result(id = true, column = "eid", property = "eid"),
+            @Result(column = "station_id", property = "station", one = @One(select = "com.weicx.dao.IStationDao.findById")),
+            @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
+
+    })
+    List<Quiz> findExamByUser(String userId) throws Exception;
+
+    /**
+     * 通过Uid 和Eid获取随机试卷id
+     * @param userId
+     * @param eid
+     * @return
+     */
+//    @Select("select auto_eid from user_quiz where uid = #{userId} and eid = #{eid}")
+//    List<String>  findRandomQuiz(@Param("userId")String userId,@Param("eid") String eid ) throws Exception;
 }

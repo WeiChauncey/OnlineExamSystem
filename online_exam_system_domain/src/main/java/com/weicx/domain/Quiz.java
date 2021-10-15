@@ -21,8 +21,8 @@ public class Quiz {
     private Integer closed;  //'是否关闭试卷', 1 已关闭，0 开放中 ，else 未定义
     private Users owner;  //'试卷作者',
     private Integer pass_score;  //通过分数，默认90
-    private Quiz_type type; // '月考',一对一
-    private Integer is_random; // '是否是随机出题试卷', 0 手动, else 随机
+    private String type; // '月考',一对一
+    private Integer is_random; // '是否是随机出题试卷', 0 手动,   1 随机
     private Integer retry;      // '重考次数'
     private String is_randomStr;
     private String closedStr;
@@ -104,11 +104,11 @@ public class Quiz {
         this.pass_score = pass_score;
     }
 
-    public Quiz_type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Quiz_type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
