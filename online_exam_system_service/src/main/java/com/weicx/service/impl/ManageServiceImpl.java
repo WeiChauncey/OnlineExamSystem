@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @ClassName RoleServiceImpl
- * @Description TODO
+ * @ClassName ManageServiceImpl
+ * @Description 岗位和工段服务实现类
  * @Author weicx
  * @date 14:58
  * @Version 1.0

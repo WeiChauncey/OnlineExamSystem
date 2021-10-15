@@ -4,7 +4,6 @@ package com.weicx.service.impl;/**
  */
 
 import com.weicx.dao.IUsersDao;
-import com.weicx.domain.Role;
 import com.weicx.domain.Station;
 import com.weicx.domain.Users;
 import com.weicx.service.IUserService;
@@ -18,13 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @ClassName UserServiceImpl
- * @Description TODO
+ * @Description 用户服务实现类
  * @Author weicx
  * @date 14:36
  * @Version 1.0

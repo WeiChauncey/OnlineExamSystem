@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @ClassName UUIDtest
- * @Description TODO
+ * @Description 密码加密测试类
  * @Author weicx
  * @date 18:57
  * @Version 1.0

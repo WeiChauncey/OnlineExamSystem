@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @ClassName out
- * @Description TODO
+ * @Description 试题服务器输出类
  * @Author weicx
  * @date 10:40
  * @Version 1.0

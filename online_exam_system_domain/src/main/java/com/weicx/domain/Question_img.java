@@ -7,7 +7,7 @@ import net.sf.jsqlparser.statement.drop.Drop;
 
 /**
  * @ClassName Question_img
- * @Description TODO
+ * @Description 试题图片工具类，分为题目的图片和选项的图片
  * @Author weicx
  * @date 14:32
  * @Version 1.0

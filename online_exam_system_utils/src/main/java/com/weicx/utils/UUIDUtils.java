@@ -7,7 +7,7 @@ import java.util.UUID;
 
 /**
  * @ClassName UUIdGenId
- * @Description TODO
+ * @Description UUID工具类，用来生成UUID
  * @Author weicx
  * @date 18:49
  * @Version 1.0

@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @ClassName SysLogService
- * @Description TODO
+ * @Description 操作log服务
  * @Author weicx
  * @date 19:44
  * @Version 1.0

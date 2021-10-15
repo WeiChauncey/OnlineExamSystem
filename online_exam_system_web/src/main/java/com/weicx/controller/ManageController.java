@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.weicx.domain.Sections;
 import com.weicx.domain.Station;
 import com.weicx.service.IManageService;
+import com.weicx.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
@@ -26,7 +27,7 @@ import java.util.List;
 
 /**
  * @ClassName ManageController
- * @Description TODO
+ * @Description 岗位和工段
  * @Author weicx
  * @date 14:53
  * @Version 1.0
@@ -108,10 +109,7 @@ public class ManageController {
     @RequestMapping("findSectionQuestionLib.do")
     public ModelAndView findSectionQuestionLib() throws Exception {
         ModelAndView mv = new ModelAndView();
-        //获取当前操作的用户 ，通过springSecurity框架获得
-        SecurityContext context = SecurityContextHolder.getContext(); //从上下文中获取当前用户
-        User user = (User) context.getAuthentication().getPrincipal(); //获取springSecurity内部的user类
-        String username = user.getUsername();
+        String username = UserUtils.findUserName();
         List<Sections> allSection = manageService.findAllSection();
         List<Station> stationList = manageService.findSationByUserName(username);
         mv.addObject("sectionsList",allSection);

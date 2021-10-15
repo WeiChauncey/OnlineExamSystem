@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Primary;
  * @Version 1.0
  */
 public class Quiz_type {
-    private Integer id    ;// 	(Primary)int(11)	No
-    private String title	  ;// varcha r(200)	No
-    private Integer ok_interval	   ;// int(11)	No
-    private Integer ng_interval	   ;// int(11)	No
+    private Integer id       ;// 	Key
+    private String title	  ;//
+    private Integer ok_interval	   ;//   考试通过后，重考天数
+    private Integer ng_interval	   ;//    考试未通过后，重考天数
 
     public Quiz_type() {
     }

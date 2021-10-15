@@ -1,8 +1,5 @@
 package com.weicx.dao;
 
-import com.weicx.domain.Question_lib;
-import com.weicx.domain.Role;
-import com.weicx.domain.Station;
 import com.weicx.domain.Users;
 import org.apache.ibatis.annotations.*;
 

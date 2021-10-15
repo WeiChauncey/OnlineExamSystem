@@ -7,7 +7,7 @@ import org.junit.Test;
 
 /**
  * @ClassName UUIDtest
- * @Description TODO
+ * @Description UUID工具类测试
  * @Author weicx
  * @date 18:57
  * @Version 1.0

@@ -4,14 +4,16 @@ package com.weicx.service.impl;/**
  */
 
 import com.weicx.dao.*;
-import com.weicx.domain.*;
+import com.weicx.domain.History;
+import com.weicx.domain.Quiz;
+import com.weicx.domain.Quiz_type;
+import com.weicx.domain.Users;
 import com.weicx.service.IQuizService;
+import com.weicx.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +55,9 @@ public class QuizServiceImpl implements IQuizService {
     @Override
     public void save(Quiz quiz) throws Exception {
         quiz.setEid(generateUuid8());
-        //TODO:需要换成操作人
-        quiz.setOwner( usersDao.findById("V0020243"));
+        String userName = UserUtils.findUserName();
+        Users UserInfo = usersDao.findByName(userName);
+        quiz.setOwner( UserInfo);
         quizDao.save(quiz);
     }
 

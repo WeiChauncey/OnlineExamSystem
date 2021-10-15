@@ -9,10 +9,10 @@
 历史、报表：history,history_record
 
 中间数据表：
-user_powers  用户和岗位中间表
-user_qmakers 用户和岗位中间表
+user_powers  用户和管理岗位中间表
+user_qmakers 用户和出题人岗位中间表
 user_quiz  用户和试卷中间表
-user_stations 用户对应岗位列表
+user_stations 用户对应岗位列表（考试入口判断逻辑）
 questions    试卷、题目中间表  eid,qid
 
 

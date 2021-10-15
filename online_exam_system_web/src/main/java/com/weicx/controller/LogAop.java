@@ -6,6 +6,7 @@ package com.weicx.controller;/**
 import com.weicx.domain.SysLog;
 import com.weicx.service.ISysLogService;
 import com.weicx.utils.UUIDUtils;
+import com.weicx.utils.UserUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,7 +26,7 @@ import static com.weicx.utils.UUIDUtils.generateUuid8;
 
 /**
  * @ClassName LogAop
- * @Description TODO
+ * @Description 记录log的Controller，运用面向切面编程
  * @Author weicx
  * @date 19:10
  * @Version 1.0
@@ -97,9 +98,10 @@ public class LogAop {
                     String ip = request.getRemoteAddr();
 
                     //获取当前操作的用户 ，通过springSecurity框架获得
-                    SecurityContext context = SecurityContextHolder.getContext(); //从上下文中获取当前用户
-                    User user = (User) context.getAuthentication().getPrincipal(); //获取springSecurity内部的user类
-                    String username = user.getUsername();
+//                    SecurityContext context = SecurityContextHolder.getContext(); //从上下文中获取当前用户
+//                    User user = (User) context.getAuthentication().getPrincipal(); //获取springSecurity内部的user类
+//                    String username = user.getUsername();
+                    String username = UserUtils.findUserName();
 
                     //将日志信息封装到SysLog对象中
                     SysLog sysLog = new SysLog();

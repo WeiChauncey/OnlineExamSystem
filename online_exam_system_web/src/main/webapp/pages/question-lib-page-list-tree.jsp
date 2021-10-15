@@ -35,8 +35,6 @@
     <!-- 导航侧栏 /-->
 
     <!-- 内容区域 -->
-    <!-- @@master = admin-layout.html-->
-    <!-- @@block = content -->
 
     <div class="content-wrapper">
 
@@ -46,7 +44,7 @@
                 题库 <small>试题列表</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="#">题库</a></li>
                 <li class="active">试题列表</li>
             </ol>
@@ -61,9 +59,6 @@
                 <%--left column--%>
                 <div class="col-md-3">
                     <div class="box box-primary">
-<%--                        <div class="box-header with-border">--%>
-<%--                            <h3 class="box-title">岗位信息</h3>--%>
-<%--                        </div>--%>
 
                         <div class="box-body">
 
@@ -187,27 +182,6 @@
                                             <td id="filename"></td>
                                             <td id="function"></td>
                                         </tr>
-<%--                                    <c:forEach items="${pageInfo.list}" var="questionLib">--%>
-<%--                                        &lt;%&ndash;										title  station_id  time   type  pass_score   owner  is_random  closed&ndash;%&gt;--%>
-<%--                                        <tr>--%>
-<%--                                            <td><input name="ids" type="checkbox"></td>--%>
-<%--                                            <td>${questionLib.qns }</td>--%>
-<%--                                            <td>${questionLib.station.name }</td>--%>
-<%--                                            <td>${questionLib.qtype.name }</td>--%>
-<%--                                            <td>${questionLib.score }</td>--%>
-<%--                                            <td>${questionLib.owner.name }</td>--%>
-
-<%--                                            <td>${questionLib.filename }</td>--%>
-
-<%--                                            <td class="text-center">--%>
-<%--                                                <button type="button" class="btn bg-olive btn-xs"--%>
-<%--                                                        onclick="location.href='${pageContext.request.contextPath}/question/findById.do?id=${questionLib.qid}'">--%>
-<%--                                                    修改--%>
-<%--                                                </button>--%>
-<%--                                                <button type="button" class="btn bg-olive btn-xs">删除</button>--%>
-<%--                                            </td>--%>
-<%--                                        </tr>--%>
-<%--                                    </c:forEach>--%>
                                     </tbody>
 
                                 </table>
@@ -220,47 +194,6 @@
                         </div>
                         <!-- /.box-body -->
 
-                        <!-- .box-footer-->
-<%--                        <div class="box-footer">--%>
-<%--                            <div class="pull-left">--%>
-<%--                                <div class="form-group form-inline">--%>
-<%--                                    总共2 页，共14 条数据。 每页 <select class="form-control" id="changePageSize"--%>
-<%--                                                              onchange="changePageSize()">--%>
-<%--                                    <option>5</option>--%>
-<%--                                    <option>6</option>--%>
-<%--                                    <option>7</option>--%>
-<%--                                    <option>8</option>--%>
-<%--                                </select> 条--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="box-tools pull-right">--%>
-<%--                                <ul class="pagination">--%>
-<%--                                    &lt;%&ndash;								第一页，每页的数量&ndash;%&gt;--%>
-<%--                                    <li>--%>
-<%--                                        <a href="${pageContext.request.contextPath}/question/findAll.do?page=1&size=${pageInfo.pageSize}"--%>
-<%--                                           aria-label="Previous">首页</a></li>--%>
-<%--                                    <li>--%>
-<%--                                        <a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pageNum-1}&size=${pageInfo.pageSize}">上一页</a>--%>
-<%--                                    </li>--%>
-
-<%--                                    <c:forEach begin="1" end="${pageInfo.pages>10?10:pageInfo.pages}" var="pageNum">--%>
-<%--                                        <li>--%>
-<%--                                            <a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageNum}&size=${pageInfo.pageSize}">${pageNum}</a>--%>
-<%--                                        </li>--%>
-<%--                                    </c:forEach>--%>
-<%--                                    <li>--%>
-<%--                                        <a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pageNum+1}&size=${pageInfo.pageSize}">下一页</a>--%>
-<%--                                    </li>--%>
-<%--                                    &lt;%&ndash;	最后一页，每页的数量&ndash;%&gt;--%>
-<%--                                    <li>--%>
-<%--                                        <a href="${pageContext.request.contextPath}/question/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}"--%>
-<%--                                           aria-label="Next">尾页</a></li>--%>
-<%--                                </ul>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-                        <!-- /.box-footer-->
 
 
                     </div>
@@ -306,40 +239,6 @@
             liObj.addClass("active");
         }
     }
-
-    <%--function initStationBySection() {--%>
-    <%--    $.ajax({--%>
-    <%--        type: 'POST',--%>
-    <%--        url: '${pageContext.request.contextPath}/manage/findAllSectionName.do',--%>
-    <%--        // data:{'username':username, 'password':password},--%>
-    <%--        datatype: 'json',--%>
-    <%--        async: 'false',// false代表等待ajax执行完毕后才执行alert("ajax执行完毕")语句;想一个Ajax执行完后再执行另一个Ajax, 需要把async=false--%>
-    <%--        success: function (data) {--%>
-    <%--            $("#stationName").append("<option selected='selected'  value=0> </option>"); //显示空行--%>
-    <%--            var selectSectionId = $("#sectionName").val();--%>
-    <%--            for (var i = 0; i < data.length; i++) {  //第一层循环取到各个list--%>
-    <%--                var section = data[i];--%>
-    <%--                if (selectSectionId == section.id) {--%>
-    <%--                    for (var j = 0; j < section.stationList.length; j++) {--%>
-    <%--                        var station = section.stationList[j];--%>
-    <%--                        $("#stationName").append("<option value=" + station.id + ">" + station.name + "</option>");--%>
-    <%--                    }--%>
-
-    <%--                }--%>
-
-    <%--            }--%>
-    <%--        },--%>
-    <%--        error: function (data) {--%>
-    <%--            alert("error..........")--%>
-    <%--        }--%>
-
-    <%--    })--%>
-    <%--}--%>
-
-    <%--$("#sectionName").change(function () {--%>
-    <%--    initStationBySection()--%>
-
-    <%--})--%>
     function showQList(e){
         var station_id=$(e).parent().attr('id');
         if (station_id == null){
@@ -505,7 +404,6 @@
                                     "  </td>")
                                 break;
                         }
-
                     });
                     //把克隆好的tr追加原来的tr后面
                     items.insertAfter(tr);
@@ -519,27 +417,8 @@
 
 
     }
-    <%--$("#deleteQuestion").click(function () {--%>
-    <%--    $.ajax({--%>
-    <%--        type: 'POST',--%>
-    <%--        data:{'id':e,},--%>
-    <%--        url: '${pageContext.request.contextPath}/question/deleteById.do',--%>
-    <%--        datatype: 'json',--%>
-    <%--        async: 'false',--%>
-    <%--        success: function (data) {--%>
-    <%--            alert(data)--%>
-    <%--            alert("success..........")--%>
-    <%--        },--%>
-    <%--        error: function (data) {--%>
-    <%--            alert("error..........")--%>
-    <%--        }--%>
-    <%--    })--%>
-    <%--})--%>
-    // $.(#deleteQuestion).onclick
+
     function delQuestion(e){
-        // var td = $(this).find("td");// 找到td元素
-        // var lo_id = td[1].innerHTML;// 指定需要获取元素的下标即可
-        // alert(lo_id);
         $.ajax({
             type: 'POST',
             data:{'id':e },
@@ -602,9 +481,6 @@
                 datatype: 'json',
                 async: 'false',// false代表等待ajax执行完毕后才执行alert("ajax执行完毕")语句;想一个Ajax执行完后再执行另一个Ajax, 需要把async=false
                 success: function (data) {
-                    // alert(JSON.stringify(data));  //[{"id":5,"name":"管制口","stationList":[]}]
-                    // var outTrxObj=JSON.stringify(data);
-                    // alert(data);
                     $("#d_from").append("<option selected='selected'  value=0> </option>"); //显示空行
                     for (var i = 0; i < data.length; i++) {  //第一层循环取到各个list
                         var fromFileName = data[i];
@@ -617,9 +493,6 @@
 
             })
         }
-
-        <%--// 初始化部门信息--%>
-        <%--initSection();--%>
 
     });
 

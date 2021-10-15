@@ -20,55 +20,6 @@
             content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
             name="viewport">
 
-<%--    <!--[if lt IE 9]>--%>
-<%--    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>--%>
-<%--    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>--%>
-<%--    <![endif]-->--%>
-
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/bootstrap/css/bootstrap.min.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/font-awesome/css/font-awesome.min.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/ionicons/css/ionicons.min.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/iCheck/square/blue.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/morris/morris.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/jvectormap/jquery-jvectormap-1.2.2.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/datepicker/datepicker3.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/daterangepicker/daterangepicker.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/datatables/dataTables.bootstrap.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/treeTable/jquery.treetable.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/treeTable/jquery.treetable.theme.default.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/select2/select2.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/colorpicker/bootstrap-colorpicker.min.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/adminLTE/css/AdminLTE.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/adminLTE/css/skins/_all-skins.min.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/css/style.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/ionslider/ion.rangeSlider.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/ionslider/ion.rangeSlider.skinNice.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/bootstrap-slider/slider.css">--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">--%>
 </head>
 
 <body class="hold-transition skin-purple sidebar-mini">
@@ -83,8 +34,6 @@
     <!-- 导航侧栏 /-->
 
     <!-- 内容区域 -->
-    <!-- @@master = admin-layout.html-->
-    <!-- @@block = content -->
 
     <div class="content-wrapper">
 
@@ -94,7 +43,7 @@
                 卷库 <small>列表</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="#">试卷列表</a></li>
                 <li class="active">添加试卷</li>
             </ol>
@@ -178,7 +127,7 @@
                                     <td>${quiz.title }</td>
                                     <td>${quiz.station.name }</td>
                                     <td>${quiz.time }</td>
-                                    <td>${quiz.type.title}</td>
+                                    <td>${quiz.type}</td>
                                     <td>${quiz.pass_score }</td>
                                     <td class="text-center">待处理</td>
                                     <td>${quiz.owner.name }</td>
@@ -207,36 +156,6 @@
                 </div>
                 <!-- /.box-body -->
 
-                <!-- .box-footer-->
-                <div class="box-footer">
-                    <div class="pull-left">
-                        <div class="form-group form-inline">
-                            总共2 页，共14 条数据。 每页 <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select> 条
-                        </div>
-                    </div>
-
-                    <div class="box-tools pull-right">
-                        <ul class="pagination">
-                            <li><a href="#" aria-label="Previous">首页</a></li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#" aria-label="Next">尾页</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- /.box-footer-->
 
 
             </div>
@@ -262,93 +181,6 @@
 </div>
 
 
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/jQuery/jquery-2.2.3.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/jQueryUI/jquery-ui.min.js"></script>--%>
-<%--<script>--%>
-<%--    $.widget.bridge('uibutton', $.ui.button);--%>
-<%--</script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/raphael/raphael-min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/morris/morris.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/sparkline/jquery.sparkline.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/knob/jquery.knob.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/daterangepicker/moment.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/daterangepicker/daterangepicker.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/daterangepicker/daterangepicker.zh-CN.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/datepicker/bootstrap-datepicker.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/slimScroll/jquery.slimscroll.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/fastclick/fastclick.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/iCheck/icheck.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/adminLTE/js/app.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/treeTable/jquery.treetable.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/select2/select2.full.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.zh-CN.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-markdown/locale/bootstrap-markdown.zh.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-markdown/js/markdown.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-markdown/js/to-markdown.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/ckeditor/ckeditor.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.extensions.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/datatables/jquery.dataTables.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/datatables/dataTables.bootstrap.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/chartjs/Chart.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/flot/jquery.flot.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/flot/jquery.flot.resize.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/flot/jquery.flot.pie.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/flot/jquery.flot.categories.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/ionslider/ion.rangeSlider.min.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-slider/bootstrap-slider.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>--%>
-<%--<script--%>
-<%--        src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>--%>
 <script>
     $(document).ready(function () {
         // 选择框
