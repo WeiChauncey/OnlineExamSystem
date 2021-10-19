@@ -46,7 +46,7 @@ public class QuestionController {
     }
 
     @RequestMapping("/findById.do")
-    public ModelAndView findAll(@RequestParam(name = "id",required = true) String questionLibId) throws Exception {
+    public ModelAndView findById(@RequestParam(name = "id",required = true) String questionLibId) throws Exception {
         ModelAndView mv = new ModelAndView();
         Question_lib questionLib = questionService.findById(questionLibId);
         mv.addObject("questionLib",questionLib);

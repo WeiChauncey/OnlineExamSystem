@@ -3,10 +3,8 @@ package com.weicx.dao;/**
  * @create 2021-09-12 20:06
  */
 
-import com.weicx.domain.Answer;
+import com.weicx.domain.*;
 import com.weicx.domain.Options;
-import com.weicx.domain.Question_lib;
-import com.weicx.domain.Quiz;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -44,14 +42,14 @@ public interface IQuestion_libDao {
     })
     Question_lib findById(String questionLibId) throws Exception;
 
-//    /**
-//     * 通过试卷ID，获取试题集合
-//     * @param quizId
-//     * @return
-//     * @throws Exception
-//     */
-//    @Select("select * from Question_lib where qid in (select qid from quiz where eid = #{quizId})")
-//    List<Question_lib> findByQuizId(String quizId) throws Exception;
+    /**
+     * 通过试卷ID，获取试题集合
+     * @param quizId
+     * @return
+     * @throws Exception
+     */
+    @Select("select * from Question_lib where qid in (select qid from quiz where eid = #{quizId})")
+    List<Question_lib> findByQuizId(String quizId) throws Exception;
 
 
     /**
@@ -61,6 +59,10 @@ public interface IQuestion_libDao {
      * @throws Exception
      */
     @Select("select * from Question_lib where qid in (select qid from questions where eid = #{quizId})")
+    @Results({
+            @Result(id = true, column = "qid", property = "qid"),
+            @Result(column = "qtype", property = "qtype", one = @One(select = "com.weicx.dao.IQuestion_typeDao.findById")),
+    })
     List<Question_lib> findByQuizAutoId(String quizId) throws Exception;
 
 
@@ -97,4 +99,16 @@ public interface IQuestion_libDao {
 
     @Delete("delete from question_lib where qid=#{qid}")
     void deleteByQid(String qid) throws Exception;
+
+    @Select("select * from Question_lib where qtype = #{qtype} and  station= #{station} ")
+    List<Question_lib> findByEidQtype(@Param("station")Integer station, @Param("qtype") Integer qtype) throws Exception;
+
+    /**
+     * 通过随机试卷ID，获取随机试题的所有qid，通过qid试题图片信息
+     * @param autoEid
+     * @return
+     * @throws Exception
+     */
+    @Select("select * from question_img where qid in (select qid from questions where eid = #{quizId})")
+    List<Question_img> findImgByQuizAutoId(String autoEid) throws Exception;
 }

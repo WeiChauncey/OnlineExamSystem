@@ -66,18 +66,5 @@ public class QuizController {
     }
 
 
-    /**
-     * 考试入口，查询待考试试卷
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping("/findExamByUser.do")
-    public ModelAndView findExamByUser() throws Exception {
-        ModelAndView mv = new ModelAndView();
-        String username = UserUtils.findUserName();
-        List<Quiz> examList = quizService.findExamByUser(username);
-        mv.addObject("quizList",examList);
-        mv.setViewName("exam-list");  //返回的web页面
-        return mv;
-    }
+
 }

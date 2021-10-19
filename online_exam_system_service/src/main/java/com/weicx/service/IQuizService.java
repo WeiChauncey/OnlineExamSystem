@@ -21,11 +21,5 @@ public interface IQuizService {
      */
     Quiz findById(String quizId) throws Exception;
 
-    /**
-     * 通过用户名，找到待考试试卷
-     * @param username
-     * @return
-     * @throws Exception
-     */
-    List<Quiz> findExamByUser(String username) throws Exception;
+
 }

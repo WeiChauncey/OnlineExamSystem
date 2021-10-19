@@ -1,6 +1,7 @@
 package com.weicx.dao;
 
 import com.weicx.domain.Quiz;
+import com.weicx.domain.Quiz_rules;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -36,21 +37,20 @@ public interface IQuizDao {
     @Select("select * from quiz where eid in (select eid from questions where qid = #{questionLibId})")
     List<Quiz> findByQuestionLibId(String questionLibId) throws Exception;
 
-//    /**
-//     * 通过试卷ID，查看试题
-//     * @param quizId
-//     * @return
-//     */
-//    @Select("select * from quiz  where eid = #{quizId}")
-//    @Results({
-//            @Result(id = true, column = "eid", property = "eid"),
-//            @Result(column = "station_id", property = "station", one = @One(select = "com.weicx.dao.IStationDao.findById")),
-//            @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
-//            @Result(column = "type", property = "type", one = @One(select = "com.weicx.dao.IQuiz_typeDao.findById")),
-//            @Result(column = "eid", property = "Question_libs", many = @Many(select = "com.weicx.dao.IQuestion_libDao.findByQuizId")),
-//
-//    })
-//    Quiz findById(String quizId);
+    /**
+     * 通过试卷ID，查看试题
+     * @param quizId
+     * @return
+     */
+    @Select("select * from quiz  where eid = #{quizId}")
+    @Results({
+            @Result(id = true, column = "eid", property = "eid"),
+            @Result(column = "station_id", property = "station", one = @One(select = "com.weicx.dao.IStationDao.findById")),
+            @Result(column = "owner", property = "owner", one = @One(select = "com.weicx.dao.IUsersDao.findById")),
+            @Result(column = "eid", property = "Question_libs", many = @Many(select = "com.weicx.dao.IQuestion_libDao.findByQuizId")),
+
+    })
+    Quiz findById(String quizId);
 
     /**
      * 通过试卷Id找到随机试卷Id
@@ -83,4 +83,6 @@ public interface IQuizDao {
      */
 //    @Select("select auto_eid from user_quiz where uid = #{userId} and eid = #{eid}")
 //    List<String>  findRandomQuiz(@Param("userId")String userId,@Param("eid") String eid ) throws Exception;
+
+
 }

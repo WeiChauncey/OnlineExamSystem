@@ -5,7 +5,7 @@ package com.weicx.domain;/**
 
 /**
  * @ClassName Quiz_rules
- * @Description 试卷规则，定义各题型类型占比
+ * @Description 随机出题试卷规则，定义各题型类型占比
  * @Author weicx
  * @date 17:19
  * @Version 1.0

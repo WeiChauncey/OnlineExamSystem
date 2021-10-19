@@ -64,44 +64,55 @@
 
                     <!-- 数据表格 -->
                     <div class="table-box">
-                        <!--数据列表-->
-                        <table id="dataList"
-                               class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                            <tr>
-                                <th class="text-center">No</th>
-                                <th class="text-center">试卷</th>
-                                <th class="text-center">岗位</th>
-                                <th class="text-center">时长（分）</th>
-                                <th class="text-center">类型</th>
-                                <th class="text-center">及格分</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-
-
-                            <c:forEach items="${quizList}" var="quiz" varStatus="status">
+                        <c:if test="${quizList.size()==0}">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <h3>1.您所在的岗位暂未开放考试试卷;</h3>
+                                    <h3>2.您已完成本岗位内考试;</h3>
+                                </div>
+                            </div>
+                        </c:if>
+                        <c:if test="${quizList.size()>0}">
+                            <!--数据列表-->
+                            <table id="dataList"
+                                   class="table table-bordered table-striped table-hover dataTable">
+                                <thead>
                                 <tr>
-                                    <td class="text-center">${status.count }</td>
-                                    <td>${quiz.title }</td>
-                                    <td>${quiz.station.name }</td>
-                                    <td>${quiz.time }</td>
-                                    <td>${quiz.type}</td>
-                                    <td>${quiz.pass_score }</td>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">试卷</th>
+                                    <th class="text-center">岗位</th>
+                                    <th class="text-center">时长（分）</th>
+                                    <th class="text-center">类型</th>
+                                    <th class="text-center">及格分</th>
 
-                                    <td class="text-center">
-                                        <a href="index.php?p=quiz&q=detail&eid=<?=$qinfos[$qi]['eid']?>"
-                                           class="btn btn-primary btn-sm">
-                                            <span class="glyphicon glyphicon-new-window"></span>&nbsp;开始
-                                        </a>
-                                    </td>
                                 </tr>
-                            </c:forEach>
-                            </tbody>
+                                </thead>
+                                <tbody>
 
-                        </table>
-                        <!--数据列表/-->
+
+                                <c:forEach items="${quizList}" var="quiz" varStatus="status">
+                                    <tr>
+                                        <td class="text-center">${status.count }</td>
+                                        <td>${quiz.title }</td>
+                                        <td>${quiz.station.name }</td>
+                                        <td>${quiz.time }</td>
+                                        <td>${quiz.type}</td>
+                                        <td>${quiz.pass_score }</td>
+
+                                        <td class="text-center">
+                                            <a href="${pageContext.request.contextPath}/exam/examDetailById.do?eid=${quiz.eid}"
+                                               class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-new-window"></span>&nbsp;开始
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+
+                            </table>
+                            <!--数据列表/-->
+                        </c:if>
+
 
                     </div>
                     <!-- 数据表格 /-->

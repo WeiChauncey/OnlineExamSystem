@@ -23,7 +23,7 @@
         <ul class="sidebar-menu">
             <li class="header">菜单</li>
             <li id="admin-index"><a
-                    href="${pageContext.request.contextPath}/quiz/findExamByUser.do"><i
+                    href="${pageContext.request.contextPath}/exam/findExamByUser.do"><i
                     class="fa fa-university"></i> <span>考试</span></a></li>
             <li class="treeview"><a href="#"> <i class="fa fa-clock-o"></i>
                 <span>历史#</span> <span class="pull-right-container"> <i

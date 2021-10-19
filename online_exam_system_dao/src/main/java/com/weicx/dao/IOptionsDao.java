@@ -42,9 +42,18 @@ public interface IOptionsDao {
     void delteOptionByQid(String qid) throws Exception;
 
 
-    @Insert("INSERT INTO answer VALUES (#{qid},#{$ansid})")
-    void saveAnswer(@Param("qid")String qid,@Param("$ansid") String optionUUid) throws Exception;
+    @Insert("INSERT INTO answer VALUES (#{qid},#{ansid})")
+    void saveAnswer(@Param("qid")String qid,@Param("ansid") String optionUUid) throws Exception;
 
     @Insert("INSERT INTO options VALUES (#{qid},#{option},#{optionid},#{is_img},#{img_width},#{img_height})")
     void saveOption(Options option) throws Exception;
+
+    /**
+     * 通过随机试卷ID，获取随机试题的所有qid，通过qid试题选项信息
+     * @param autoEid
+     * @return
+     * @throws Exception
+     */
+    @Select("select * from Options where qid in (select qid from questions where eid = #{quizId})")
+    List<Options> findByQuizAutoId(String autoEid) throws Exception;
 }
