@@ -18,7 +18,7 @@ public class History {
 	private String	eid	         ;   //	试卷ID
 	private Integer	score        ;   //	 分数
 	private Integer	start_time	 ;   //	考试开始时间
-	private Integer	submit_time	 ;    //	考试提交时间
+	private Integer	submit_time	 ;    //	考试提交时间，时间戳/1000（精确到秒）
 
     public History() {
     }

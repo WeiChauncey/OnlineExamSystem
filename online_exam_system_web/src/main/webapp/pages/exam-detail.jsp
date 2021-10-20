@@ -175,14 +175,16 @@
                 <div class="box-body">
                     <div class="row">
 <%--                        <iframe name="frmSubmit" frameborder="0" style="display: none"></iframe>--%>
-                        <form id="quiz_form" action="${pageContext.request.contextPath}/exam/autosubmit.do" method="POST" target="frmSubmit"  class="form-horizontal">
+<%--                        <form id="quiz_form" action="${pageContext.request.contextPath}/exam/autoSubmit.do" method="POST" target="frmSubmit"  class="form-horizontal">--%>
+                        <form id="quiz_form" action="${pageContext.request.contextPath}/exam/autoSubmit.do" method="POST"  class="form-horizontal">
                             <input type="hidden" name="hid" id="hid" value="${hid}"/>
                             <input type="hidden" name="eid" id="eid" value="${quizExam.eid}"/>
-                            <input type="hidden" name="auto_eid" id="auto_eid" value="${autoEid}"/>
+                            <input type="hidden" name="autoEid" id="autoEid" value="${autoEid}"/>
                             <%-- 试题部分  --%>
                             <div class="col-md-10">
                                 <c:forEach items="${questionLibs}" var="questionLib" varStatus="status">
-                                    <div class="row q-area" id="${questionLib.qid}" >
+                                    <div class="row q-area" id="${questionLib.qtype.qtid}_${questionLib.qid}" >
+
 <%--                                    <div class="row q-area" id="${questionLib.qtype.qtid}"+"_"+"${questionLib.qid}" >--%>
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
@@ -294,9 +296,10 @@
                                             <div id="lastTime" class="timertext" style="-webkit-animation: ct ${quizExam.time*60}s linear;animation: ct ${quizExam.time*60}s linear;">${quizExam.time*60}:00</div>
                                         </div>
                                         <button class="btn btn-success" style="width:100px;margin-left:30px;" onclick="submitQuiz();"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;交卷</button>
+                                        <button class="btn btn-success" style="width:100px;margin-left:30px;" onclick="backgroundSubmit();"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>自动交卷</button>
 
                                         <script>
-                                            var sft=window.setInterval(function() {backgroundSubmit();},5000);
+                                            // var sft=window.setInterval(function() {backgroundSubmit();},5000);
                                             window.setInterval(function() {quizTimer();},1000);
                                             setTimeout(function(){clearInterval(sft);submitQuiz();},${quizExam.time*60*1000} );
                                         </script>
@@ -313,7 +316,7 @@
                                     <div class="col-md-12" style="text-align:center;">
                                         <c:forEach items="${questionLibs}" var="questionLib" varStatus="status">
                                             <div class="q-card">
-                                                <a href="#${questionLib.qid}">${status.count}</a>
+                                                <a href="#${questionLib.qtype.qtid}_${questionLib.qid}">${status.count}</a>
                                             </div>
                                         </c:forEach>
                                     </div>
@@ -393,28 +396,28 @@
     function backgroundSubmit() {
         $('#quiz_form').submit();
         //TODO 提交简答题
-        var hid=$('#hid').val(); //history table id
-        var ansDivs=$('.ans-area');
-        $.each(ansDivs,function(i,item){
-            var answer='';
-            if(item.innerHTML===undefined || item.innerHTML.length==0){
-            }else{
-                answer=item.innerHTML;
-            }
-            $.ajax({
-                type:'POST',
-                url: '${pageContext.request.contextPath}/exam/brifAnswer.do',
-                data: {
-                    "hid": hid,
-                    "answer":answer,
-                    "qid":item.id.substr(5)
-                },
-                dataType:'text',
-                success:function(resp){
-                    console.log(resp);
-                }
-            });
-        });
+        <%--var hid=$('#hid').val(); //history table id--%>
+        <%--var ansDivs=$('.ans-area');--%>
+        <%--$.each(ansDivs,function(i,item){--%>
+        <%--    var answer='';--%>
+        <%--    if(item.innerHTML===undefined || item.innerHTML.length==0){--%>
+        <%--    }else{--%>
+        <%--        answer=item.innerHTML;--%>
+        <%--    }--%>
+        <%--    $.ajax({--%>
+        <%--        type:'POST',--%>
+        <%--        url: '${pageContext.request.contextPath}/exam/brifAnswer.do',--%>
+        <%--        data: {--%>
+        <%--            "hid": hid,--%>
+        <%--            "answer":answer,--%>
+        <%--            "qid":item.id.substr(5)--%>
+        <%--        },--%>
+        <%--        dataType:'text',--%>
+        <%--        success:function(resp){--%>
+        <%--            console.log(resp);--%>
+        <%--        }--%>
+        <%--    });--%>
+        <%--});--%>
     }
 
     function chkEmptyAnswer(){
@@ -468,14 +471,15 @@
             }
         }
         backgroundSubmit();
-        var t = setInterval(function () {
-            //获取iframe标签里body元素里的文字。即服务器响应过来的"上传成功"或"上传失败"
-            var word = $("iframe[name='frmSubmit']").contents().find("body").text();
-            if (word != "") {
-                clearInterval(t);   //清除定时器
-                window.location = word;
-            }
-        }, 500);
+        <%--var t = setInterval(function () {--%>
+        <%--    //获取iframe标签里body元素里的文字。即服务器响应过来的"上传成功"或"上传失败"--%>
+        <%--    var word = $("iframe[name='frmSubmit']").contents().find("body").text();--%>
+        <%--    if (word == "OK") {--%>
+        <%--        clearInterval(t);   //清除定时器--%>
+        <%--        var hid=$('#hid').val();--%>
+        <%--        window.location = "${pageContext.request.contextPath}/exam/result.do?autoEid="+hid;--%>
+        <%--    }--%>
+        <%--}, 500);--%>
     }
 
 

@@ -1,7 +1,9 @@
 package com.weicx.dao;
 
+import com.weicx.domain.Options;
 import com.weicx.domain.Question_lib;
 import com.weicx.domain.Quiz_rules;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -26,5 +28,9 @@ public interface IExamDao {
 
     @Insert("insert into questions VALUES (#{eid},#{qid}) ")
     void insertQuestion(@Param("eid")String eid, @Param("qid") String qid) throws Exception;
+
+    @Delete("delete from answer where qid= #{questionLibId}")
+    void deleteAnswerByQid(String questionLibId) throws  Exception;
+
 
 }

@@ -7,6 +7,7 @@ import com.weicx.dao.*;
 import com.weicx.domain.*;
 import com.weicx.service.IExamService;
 import com.weicx.service.tx.ExamServiceUtils.ExamOut;
+import com.weicx.service.tx.ExamServiceUtils.ExamResultOut;
 import com.weicx.service.tx.ExamServiceUtils.QuestionSelecter;
 import com.weicx.utils.UUIDUtils;
 import com.weicx.utils.UserUtils;
@@ -14,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.weicx.utils.ListUtils.isListEqual;
 
 /**
  * @ClassName ExamServiceImpl
@@ -117,7 +122,7 @@ public class ExamServiceImpl  implements IExamService {
         //判断是否有正在进行的考试
         Integer submitTime = historyDao.findLatestQuiz(uid);
         if(submitTime!= null){
-            if (submitTime>System.currentTimeMillis()-5){
+            if (submitTime>(System.currentTimeMillis()/1000-5)){
                 //alert("您有尚未处理完成的考试，请稍后重试!");
                 //返回到待考试列表界面
             }
@@ -136,7 +141,7 @@ public class ExamServiceImpl  implements IExamService {
                 if (quizRule.getScore() ==0){
                     continue;
                 }
-                //get 该体型的所有试题，根据目标分数获取试题集合
+                //get 该题型，该岗位的所有试题，根据目标分数获取试题集合
                 List<Question_lib> questionLibList  = question_libDao.findByEidQtype(section_id,quizRule.getQtype());
 
                 List<Question_lib> resultList = QuestionSelecter.findResult(questionLibList, quizRule.getScore());
@@ -167,11 +172,88 @@ public class ExamServiceImpl  implements IExamService {
             autoEid = eid;
         }
         historyDao.insertHistory(uid,autoEid, 0,start_time);
+        Integer hid = historyDao.findByUidAutoEid(uid,autoEid);
         List<Question_lib> questions = question_libDao.findByQuizAutoId(autoEid);
         List<Question_img> imgs = question_libDao.findImgByQuizAutoId(autoEid);
         List<Options> optionsList = optionsDao.findByQuizAutoId(autoEid);
-        ExamOut examOut = new ExamOut(QuizInfo, questions, imgs,optionsList);
+        ExamOut examOut = new ExamOut(hid,autoEid,QuizInfo, questions, imgs,optionsList);
 
         return examOut;
+    }
+
+    @Override
+    public String autoSubmit(String eid, Integer hid, String autoeid, HttpServletRequest request) throws Exception {
+
+        historyDao.updateSubmitTime(hid, System.currentTimeMillis()/1000);
+
+        Integer totalScore =0;
+        //获取随机试卷对应的所有试题
+        List<Question_lib> questions = question_libDao.findByQuizAutoId(autoeid);
+        for (int i = 0; i < questions.size(); i++) {
+            Question_lib currentQ = questions.get(i);
+            String qid = currentQ.getQid();
+            Integer qtid = currentQ.getQtype().getQtid();
+            if (qtid == 3){
+                //填空题需人工阅卷,写入history_answer
+                String qns = currentQ.getQns(); //试题
+                List<Options> optionsList = optionsDao.findByQuestionId(qid);
+                for (Options option: optionsList){
+                    String curOption = option.getOptionid();
+                    //todo 通过optionId获取考生填写的答案
+                    String answer="";
+                    //将答案拼接到试题后面
+                }
+                historyDao.addHistoryAnswer(hid,qid,qns,currentQ.getScore());
+                continue;
+            }
+            //单选、多选、判断
+            String[] userAnswers = request.getParameterValues("ans_" + qid);
+            if (userAnswers==null){
+                //考生未答该题
+                continue;
+            }
+            List<String> userAnswer = Arrays.asList(userAnswers);
+
+            List<Options> answerOptions = optionsDao.findAnswerByQuestionId(qid);
+            List<String> answerList = new ArrayList<>();//试题答案集合
+            for (Options option : answerOptions){
+                answerList.add(option.getOptionid());
+            }
+            Integer currentScore = isListEqual(answerList, userAnswer)?currentQ.getScore():0;
+            totalScore +=currentScore;
+            //单选、多选、判断,写入history_record
+            historyDao.addHistoryRecord(hid,qid,(currentScore==0?0:1));
+        }
+        historyDao.updateHistoryInfo(hid,totalScore);
+        return "OK";
+    }
+
+    /**
+     * 随机试卷结果
+     * @param hid
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ExamResultOut getExamResult(Integer hid) throws Exception {
+
+        Integer remarkCount= 0;        //人工判卷试题数量
+        Integer remarkScore = 0; //人工判卷试题分数
+        //单选、多选、判断结果
+        History lastHistoryByUid = historyDao.findLastHistoryByUid(hid);
+        if (lastHistoryByUid != null){
+            String autoEid = lastHistoryByUid.getEid();
+            //填空、简答结果
+            List<Question_lib> remarkQuestionList = question_libDao.findRemarkQuesiton(autoEid);
+            remarkCount = remarkQuestionList.size();
+            if (remarkCount>0){
+                for (Question_lib remarkQuestion :remarkQuestionList){
+                    remarkScore +=remarkQuestion.getScore();
+                }
+            }
+
+        }
+        ExamResultOut examResultOut = new ExamResultOut(remarkCount,remarkScore,lastHistoryByUid);
+        return examResultOut;
     }
 }

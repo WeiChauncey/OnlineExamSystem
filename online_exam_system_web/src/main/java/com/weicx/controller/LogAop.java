@@ -50,25 +50,28 @@ public class LogAop {
     public  void  doBefore(JoinPoint jp) throws NoSuchMethodException {
         startTime = new Date();//获取开始时间
         executionClass = jp.getTarget().getClass();//获取要执行的类
-        String methodName = jp.getSignature().getName();//获取访问的方法名称
-        Object[] args = jp.getArgs();//获取访问方法的参数
-        if (args==null||args.length==0){
-            executionMethod=executionClass.getMethod(methodName);//只能获取无参数的方法
-        }else {
-            Class[] classArgs = new Class[args.length];
-            for (int i = 0; i < args.length; i++) {
-                classArgs[i]=args[i].getClass();//获取每个参数的class，放入classArgs数组
-            }
-            //捕获 public ModelAndView questionModify(HttpServletRequest request) 异常
+        if (executionClass!=null && executionClass!=ExamController.class && executionClass !=LogAop.class){
+            String methodName = jp.getSignature().getName();//获取访问的方法名称
+            Object[] args = jp.getArgs();//获取访问方法的参数
+            if (args==null||args.length==0){
+                executionMethod=executionClass.getMethod(methodName);//只能获取无参数的方法
+            }else {
+                Class[] classArgs = new Class[args.length];
+                for (int i = 0; i < args.length; i++) {
+                    classArgs[i]=args[i].getClass();//获取每个参数的class，放入classArgs数组
+                }
+                //捕获 public ModelAndView questionModify(HttpServletRequest request) 异常
 
-            try {
-                executionMethod = executionClass.getMethod(methodName, classArgs);
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
+                try {
+                    executionMethod = executionClass.getMethod(methodName, classArgs);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
 
 
     }
@@ -81,7 +84,7 @@ public class LogAop {
 
         //获取url  @RequestMapping("/manage")   @RequestMapping("findAllStation.do")
         String url="";
-        if (executionClass!=null && executionMethod!=null && executionClass !=LogAop.class){
+        if (executionClass!=null && executionMethod!=null && executionClass!=ExamController.class && executionClass !=LogAop.class){
             //1 获取类的@RequestMapping()
             RequestMapping classAnnotation = (RequestMapping) executionClass.getAnnotation(RequestMapping.class);
             if (classAnnotation != null){

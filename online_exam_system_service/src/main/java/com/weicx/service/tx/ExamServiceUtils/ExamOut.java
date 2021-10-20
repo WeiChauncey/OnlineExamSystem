@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class ExamOut {
 
+    private Integer hid ;//历史表id
+    private String autoEid;
     private Quiz QuizInfo;   //试卷信息
     private List<Question_lib> questions;   //试题题目
     private List<Question_img> imgs; //试题图片集合
@@ -28,11 +30,29 @@ public class ExamOut {
     public ExamOut() {
     }
 
-    public ExamOut(Quiz quizInfo, List<Question_lib> questions, List<Question_img> imgs, List<Options> optionsList) {
+    public ExamOut(Integer hid, String autoEid, Quiz quizInfo, List<Question_lib> questions, List<Question_img> imgs, List<Options> optionsList) {
+        this.hid = hid;
+        this.autoEid = autoEid;
         QuizInfo = quizInfo;
         this.questions = questions;
         this.imgs = imgs;
         this.optionsList = optionsList;
+    }
+
+    public Integer getHid() {
+        return hid;
+    }
+
+    public void setHid(Integer hid) {
+        this.hid = hid;
+    }
+
+    public String getAutoEid() {
+        return autoEid;
+    }
+
+    public void setAutoEid(String autoEid) {
+        this.autoEid = autoEid;
     }
 
     public Quiz getQuizInfo() {

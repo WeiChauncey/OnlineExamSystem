@@ -4,10 +4,7 @@ package com.weicx.service.impl;/**
  */
 
 import com.github.pagehelper.PageHelper;
-import com.weicx.dao.IAnswerDao;
-import com.weicx.dao.IOptionsDao;
-import com.weicx.dao.IQuestion_libDao;
-import com.weicx.dao.IQuestion_typeDao;
+import com.weicx.dao.*;
 import com.weicx.domain.*;
 import com.weicx.service.IQuestionService;
 import com.weicx.service.tx.QuestionService.QuestionOut;
@@ -17,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @ClassName QuestionServiceImpl
@@ -36,7 +32,7 @@ public class QuestionServiceImpl implements IQuestionService {
     @Autowired
     private IQuestion_typeDao question_typeDao;
     @Autowired
-    private IAnswerDao answerDao;
+    private IExamDao examDao;
 
     @Override
     public List<Question_lib> findAll(int page, int size) throws Exception {
@@ -144,7 +140,7 @@ public class QuestionServiceImpl implements IQuestionService {
         //3 delete options
         optionsDao.delteOptionByQid(qid);
         //4 delete answer
-        answerDao.deleteAnswerByQid(qid);
+        examDao.deleteAnswerByQid(qid);
         //5 add options and answer
         //下面是循环，每个选项都新生成optionUUid，如果该选项是答案，则保存answer
         for (Options option : optionsList){
@@ -199,7 +195,7 @@ public class QuestionServiceImpl implements IQuestionService {
             //3 delete options
             optionsDao.delteOptionByQid(qid);
             //4 delete answer
-            answerDao.deleteAnswerByQid(qid);
+            examDao.deleteAnswerByQid(qid);
             //4 delete questionlib
             question_libDao.deleteByQid(qid);
         }catch (Exception e){

@@ -111,4 +111,12 @@ public interface IQuestion_libDao {
      */
     @Select("select * from question_img where qid in (select qid from questions where eid = #{quizId})")
     List<Question_img> findImgByQuizAutoId(String autoEid) throws Exception;
+
+    /**
+     * 通过随机试卷ID，获取人工批阅试题信息
+     * @param autoEid
+     * @return
+     */
+    @Select("select * from Question_lib where qtype in (3,4) and  qid in (select qid from questions where eid = #{autoEid} )  ")
+    List<Question_lib> findRemarkQuesiton(String autoEid);
 }
