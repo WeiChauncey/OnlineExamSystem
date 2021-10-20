@@ -1,0 +1,96 @@
+.input-label,
+.input-in-label {
+	margin:0 5px 0 0;
+	display:inline-block
+}
+.input-label input,
+.input-in-label input{
+    display:none;
+}
+.input-label input[type=radio] + span,
+.input-label input[type=radio] + span:after{
+    border-radius: 100%;
+}
+.input-in-label input[type=radio] + span,
+.input-in-label input[type=radio]:checked + span{
+    border-radius: 15px;
+}
+
+.input-label input[type=checkbox] + span,
+.input-label input[type=checkbox]:checked + span:after,
+.input-in-label input[type=checkbox] + span,
+.input-in-label input[type=checkbox]:checked + span{
+    border-radius: 0;
+}
+
+.input-label span,
+.input-in-label span {
+    background-color:#fff;
+    border:1px solid rgba(0,0,0,0.15);
+    display:inline-block;
+    margin-right: 10px;
+    margin-top:-1px;
+    vertical-align: middle;
+    line-height: 1;
+    cursor: pointer;
+}
+.input-label input:checked + span:after{
+    content: "";
+    display: inline-block;
+}
+
+.input-label span.ip-normal{
+    height: 18px;
+    width: 18px;
+}
+.input-in-label span.ip-normal{
+    height: auto;
+    width: auto;
+    padding: 5px 10px;
+}
+
+.input-label input:checked + .ip-normal:after{
+    width: 12px;
+    height: 12px;
+    margin: 2px;
+}
+.input-in-label input:checked + .ip-normal{
+    width: auto;
+    height: auto;
+}
+
+.input-label input:checked + .rdb-default:after,
+.input-label input:checked + .chb-default:after,
+.input-in-label input:checked + .rdb-default,
+.input-in-label input:checked + .chb-default {
+    background-color:#222;
+    color: white;
+}
+.input-label input:checked + .rdb-success:after,
+.input-label input:checked + .chb-success:after,
+.input-in-label input:checked + .rdb-success,
+.input-in-label input:checked + .chb-success {
+    background-color:#5CB85C;
+    color: white;
+}
+.input-label input:checked + .rdb-info:after,
+.input-label input:checked + .chb-info:after,
+.input-in-label input:checked + .rdb-info,
+.input-in-label input:checked + .chb-info {
+    background-color:#5BC0DE;
+    color: white;
+}
+.input-label input:checked + .rdb-warning:after,
+.input-label input:checked + .chb-warning:after,
+.input-in-label input:checked + .rdb-warning,
+.input-in-label input:checked + .chb-warning {
+    background-color:#F0AD4E;
+    color: white;
+}
+.input-label input:checked + .rdb-danger:after,
+.input-label input:checked + .chb-danger:after,
+.input-in-label input:checked + .rdb-danger,
+.input-in-label input:checked + .chb-danger {
+    background-color:#D9534F;
+    color: white;
+}

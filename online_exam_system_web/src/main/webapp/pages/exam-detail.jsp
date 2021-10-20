@@ -21,6 +21,7 @@
             name="viewport">
 
 </head>
+<link rel="stylesheet"    href="${pageContext.request.contextPath}/css/checkbox.css">
 <style>
     .q-area .panel-heading{
         font-size: 20px;
@@ -53,16 +54,99 @@
         margin:0 5px 0 0;
         display:inline-block
     }
+
+
+    /*先设置一个160x160的方块，然后我们在这里面完成我们的效果*/
+    .circleProgress_wrapper {
+        width: 160px;
+        height: 160px;
+        margin: 10px 0;
+        position: relative;
+    }
+    /*这个容器里再放两个矩形，每个矩形都占一半*/
+    .wrapper1 {
+        width: 80px;
+        height: 160px;
+        position: absolute;
+        top:0;
+        overflow: hidden;
+    }
+
+    .right {
+        right: 0;
+    }
+
+    .left {
+        left: 0;
+    }
+    /*每个矩形中的半圆*/
+    .circleProgress{
+        width: 160px;
+        height: 160px;
+        border:20px solid #fff;
+        border-radius: 50%;
+        position: absolute;
+        top:0;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+    .rightcircle{
+        border-top:20px solid green;
+        border-right:20px solid green;
+        right:0;
+    }
+    .leftcircle{
+        border-bottom:20px solid green;
+        border-left:20px solid green;
+        left:0;
+    }
+    @-webkit-keyframes rcp{
+        0%{
+            border-top:20px solid green;
+            border-right:20px solid green;
+            -webkit-transform: rotate(45deg);
+        }
+        50%{
+            border-top:20px solid rgb(232, 232, 12);
+            border-right:20px solid rgb(232, 232, 12);
+            -webkit-transform: rotate(225deg);
+        }
+        100%{-webkit-transform: rotate(225deg);}
+    }
+    @-webkit-keyframes lcp{
+        0%{-webkit-transform: rotate(45deg);}
+        50%{
+            border-bottom:20px solid rgb(232, 232, 12);
+            border-left:20px solid rgb(232, 232, 12);
+            -webkit-transform: rotate(45deg);
+        }
+        100%{
+            border-bottom:20px solid #ED1A1A;
+            border-left:20px solid #ED1A1A;
+            -webkit-transform: rotate(225deg);
+        }
+    }
+    .timertext{
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
+        text-align: center;
+        font-size: 40px;
+        background-color: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top:20px;
+        left:20px;
+    }
+    /*前一半时间为绿色，后一半时间为黄色，考试时间到位红色*/
+    @-webkit-keyframes ct{
+        0%{color: #008800;}
+        50%{color:rgb(232, 232, 12);}
+        100%{color:#ED1A1A;}
+    }
+
+
 </style>
-<%--<style>--%>
-<%--    .circleprogress {--%>
-<%--        width: 160px;--%>
-<%--        height: 160px;--%>
-<%--        border: 20px solid red;--%>
-<%--        border-radius: 50%;--%>
-<%--    }--%>
-<%--</style>--%>
-<%--<link rel="stylesheet"  href="${pageContext.request.contextPath}/css/circle_timer.css">--%>
 
 <body class="hold-transition skin-purple sidebar-mini">
 
@@ -79,20 +163,6 @@
 
     <div class="content-wrapper">
 
-        <!-- 内容头部 -->
-        <section class="content-header">
-            <h1>
-                考试 <small>考试列表</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a>
-                </li>
-                <li><a href="#">考试</a></li>
-                <li class="active">考试列表</li>
-            </ol>
-        </section>
-        <!-- 内容头部 /-->
-
         <!-- 正文区域 -->
         <section class="content">
 
@@ -105,10 +175,10 @@
                 <div class="box-body">
                     <div class="row">
 <%--                        <iframe name="frmSubmit" frameborder="0" style="display: none"></iframe>--%>
-                        <form id="quiz_form" action="update.php?type=qsubmit" method="POST" target="frmSubmit"  class="form-horizontal">
-                            <input type="hidden" name="hid" id="hid" value="<?=$hid?>"/>
-                            <input type="hidden" name="eid" id="eid" value="<?=$eid?>"/>
-                            <input type="hidden" name="auto_eid" id="auto_eid" value="<?=$auto_eid?>"/>
+                        <form id="quiz_form" action="${pageContext.request.contextPath}/exam/autosubmit.do" method="POST" target="frmSubmit"  class="form-horizontal">
+                            <input type="hidden" name="hid" id="hid" value="${hid}"/>
+                            <input type="hidden" name="eid" id="eid" value="${quizExam.eid}"/>
+                            <input type="hidden" name="auto_eid" id="auto_eid" value="${autoEid}"/>
                             <%-- 试题部分  --%>
                             <div class="col-md-10">
                                 <c:forEach items="${questionLibs}" var="questionLib" varStatus="status">
@@ -210,16 +280,52 @@
                             </div>
 
                             <%-- 时间部分  --%>
+                            <div class="col-md-2 fix-right" style="width:180px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="hidden" name="endTime" id="endTime" value="${quizExam.time*60}">
+                                        <div class="circleProgress_wrapper">
+                                            <div class="wrapper1 right">
+                                                <div class="circleProgress rightcircle" style="-webkit-animation: rcp ${quizExam.time*60}s linear;animation: rcp ${quizExam.time*60}s linear;"></div>
+                                            </div>
+                                            <div class="wrapper1 left">
+                                                <div class="circleProgress leftcircle" style="-webkit-animation: lcp ${quizExam.time*60}s linear;animation: lcp ${quizExam.time*60}s linear;"></div>
+                                            </div>
+                                            <div id="lastTime" class="timertext" style="-webkit-animation: ct ${quizExam.time*60}s linear;animation: ct ${quizExam.time*60}s linear;">${quizExam.time*60}:00</div>
+                                        </div>
+                                        <button class="btn btn-success" style="width:100px;margin-left:30px;" onclick="submitQuiz();"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;交卷</button>
 
+                                        <script>
+                                            var sft=window.setInterval(function() {backgroundSubmit();},5000);
+                                            window.setInterval(function() {quizTimer();},1000);
+                                            setTimeout(function(){clearInterval(sft);submitQuiz();},${quizExam.time*60*1000} );
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-md-12" style="text-align:center;font-weight:bold;">
+                                        题卡
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:center;">
+                                        <c:forEach items="${questionLibs}" var="questionLib" varStatus="status">
+                                            <div class="q-card">
+                                                <a href="#${questionLib.qid}">${status.count}</a>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+
+                            </div>
                         </form>
 
 
 
 
                     </div>
-                    <!-- 数据表格 -->
-                    <!-- 数据表格 /-->
-
 
                 </div>
                 <!-- /.box-body -->
@@ -267,6 +373,111 @@
             liObj.addClass("active");
         }
     }
+
+    /**
+     * 间隔1秒,自动更新考试倒计时时间
+     */
+    function quizTimer() {
+        var endTime = parseInt($('#endTime')[0].value);
+        endTime-=1;
+        $('#endTime')[0].value=endTime;
+
+        var dMin = parseInt(endTime / 60);
+        var dSec = parseInt(endTime % 60);
+        $('#lastTime')[0].innerText = dMin + ':' + dSec;
+    }
+
+    /**
+     * 间隔5秒自动提交试卷
+     */
+    function backgroundSubmit() {
+        $('#quiz_form').submit();
+        //TODO 提交简答题
+        var hid=$('#hid').val(); //history table id
+        var ansDivs=$('.ans-area');
+        $.each(ansDivs,function(i,item){
+            var answer='';
+            if(item.innerHTML===undefined || item.innerHTML.length==0){
+            }else{
+                answer=item.innerHTML;
+            }
+            $.ajax({
+                type:'POST',
+                url: '${pageContext.request.contextPath}/exam/brifAnswer.do',
+                data: {
+                    "hid": hid,
+                    "answer":answer,
+                    "qid":item.id.substr(5)
+                },
+                dataType:'text',
+                success:function(resp){
+                    console.log(resp);
+                }
+            });
+        });
+    }
+
+    function chkEmptyAnswer(){
+        var ar=true;
+        $(".q-area").each(function(e){
+            var r=true;
+            var params=this.id.split("_");
+            switch(params[0]){
+                case "1":
+                case "2":
+                case "5":
+                    if($(this).find('.panel-body :checked').length==0){
+                        r=false;
+                        ar=false;
+                    }
+                    break;
+                case "3":
+                    $(this).find("input").each(function(e){
+                        if(this.value===undefined || this.value.length==0){
+                            r=false;
+                            ar=false;
+                            return false;
+                        }
+                    });
+                    break;
+                case "4":
+                    if($(this).find(".op-area > div").text().length==0){
+                        r=false;
+                        ar=false;
+                    }
+                    break;
+            }
+            if(r===false){
+                $(this).find(".panel-default").removeClass("panel-default").addClass("panel-danger");
+            }else{
+                $(this).find(".panel-danger").removeClass("panel-danger").addClass("panel-default");
+            }
+        });
+        return ar;
+    }
+
+    /**
+     * 考试时间到，或者考生点击交卷时，进行提交试卷
+     */
+    function submitQuiz() {
+        var r=chkEmptyAnswer();
+        if(r===false){
+            r=confirm("您还没做完所有题呢，一定要提交吗?")
+            if(r==false){
+                return;
+            }
+        }
+        backgroundSubmit();
+        var t = setInterval(function () {
+            //获取iframe标签里body元素里的文字。即服务器响应过来的"上传成功"或"上传失败"
+            var word = $("iframe[name='frmSubmit']").contents().find("body").text();
+            if (word != "") {
+                clearInterval(t);   //清除定时器
+                window.location = word;
+            }
+        }, 500);
+    }
+
 
     $(document).ready(function () {
 
