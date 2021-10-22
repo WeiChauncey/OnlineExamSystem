@@ -69,7 +69,7 @@ public class ManageController {
 
 
     @RequestMapping("findAllSection.do")
-    @PreAuthorize("authentication.principal.username =='ethan'") //只有weicx用户可以操作
+    @PreAuthorize("authentication.principal.username =='admin'") //只有admin用户可以操作
     public ModelAndView findAllSection() throws Exception {
         ModelAndView mv = new ModelAndView();
         List<Sections> sectionsList = manageService.findAllSection();

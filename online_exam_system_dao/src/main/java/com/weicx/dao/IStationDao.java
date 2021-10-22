@@ -1,8 +1,6 @@
 package com.weicx.dao;
 
-import com.weicx.domain.Quiz;
 import com.weicx.domain.Station;
-import com.weicx.domain.Users;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -10,6 +8,7 @@ import java.util.List;
 /**
  * @author weicx
  * @create 2021-09-13 14:45
+ * 与选项相关表：station
  */
 public interface IStationDao {
 

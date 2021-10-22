@@ -26,15 +26,15 @@
                     href="${pageContext.request.contextPath}/exam/findExamByUser.do"><i
                     class="fa fa-university"></i> <span>考试</span></a></li>
             <li class="treeview"><a href="#"> <i class="fa fa-clock-o"></i>
-                <span>历史#</span> <span class="pull-right-container"> <i
+                <span>历史</span> <span class="pull-right-container"> <i
                         class="fa fa-angle-left pull-right"></i>
 				</span>
             </a>
                 <ul class="treeview-menu">
 
                     <li id="history-me"><a
-                            href="#">
-                        <i class="fa fa-circle-o"></i> 我的#
+                            href="${pageContext.request.contextPath}/history/findHistoryByUser.do">
+                        <i class="fa fa-circle-o"></i> 我的
                     </a></li>
                     <li id="history-all"><a
                             href="#"> <i

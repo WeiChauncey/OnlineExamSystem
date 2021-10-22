@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * @author weicx
  * @create 2020-07-28 2:19
+ * 与选项相关表：sysLog
  */
 public interface ISysLogDao {
     @Insert("insert into sysLog (id,visitTime,username,ip,url,executionTime,method) values(#{id},#{visitTime},#{username},#{ip},#{url},#{executionTime},#{method})")

@@ -26,11 +26,9 @@ import java.util.List;
 @Transactional
 public class QuestionServiceImpl implements IQuestionService {
     @Autowired
-    private IQuestion_libDao question_libDao ;
+    private IQuestionDao questionDao;
     @Autowired
     private IOptionsDao optionsDao ;
-    @Autowired
-    private IQuestion_typeDao question_typeDao;
     @Autowired
     private IExamDao examDao;
 
@@ -38,23 +36,23 @@ public class QuestionServiceImpl implements IQuestionService {
     public List<Question_lib> findAll(int page, int size) throws Exception {
         //
         PageHelper.startPage(page,size);
-        return question_libDao.findAll();
+        return questionDao.findQuestionLibAll();
     }
 
     @Override
     public Question_lib findById(String questionLibId) throws Exception {
-        return question_libDao.findById(questionLibId);
+        return questionDao.findQLibById(questionLibId);
     }
 
     @Override
     public List<Question_lib> findByStation(String station_id, int page, int size) throws Exception {
         PageHelper.startPage(page,size);
-        return question_libDao.findByStation(station_id);
+        return questionDao.findByStation(station_id);
     }
 
     @Override
     public List<Question_type> findQuestionTypeAll() throws Exception {
-        return question_typeDao.findAll();
+        return questionDao.findQtypeAll();
     }
 
     @Override
@@ -69,7 +67,7 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Override
     public List<Question_img> findImageByQuestionId(String questionLibId) throws Exception {
-        return optionsDao.findImageByQuestionId(questionLibId);
+        return questionDao.findImageByQuestionId(questionLibId);
     }
 
     /**
@@ -98,7 +96,7 @@ public class QuestionServiceImpl implements IQuestionService {
 //            //imgUpLoadPath没有改文件则新建，有则打开该文件
 //
 //            for (int i = 0; i < img_cnt; i++) {
-//                optionsDao.saveImgByQuestionId(qid,imgPath,imgw,imgh);
+//                questionDao.saveImgByQuestionId(qid,imgPath,imgw,imgh);
 //            }
 //        }
 //        //3 delete options
@@ -123,9 +121,9 @@ public class QuestionServiceImpl implements IQuestionService {
     @Override
     public String questionModify(String qid, String qns, Integer qtid, String qscore, Integer img_cnt, String imgPath, Integer imgw, Integer imgh, List<Options> optionsList,String[] answerList) throws Exception {
         //1 modify question_lib
-        question_libDao.updateQuestion(qid,qns,qtid,qscore);
+        questionDao.updateQuestion(qid,qns,qtid,qscore);
         //2 delete question_img
-        optionsDao.delteImgByQuestionId(qid);
+        questionDao.deleteImgByQuestionId(qid);
         if (img_cnt>0){ //题目图片
             //todo 将上传的图片保存
             String imgUpLoadPath="upload/"+qid; //上传路径+试题id
@@ -134,7 +132,7 @@ public class QuestionServiceImpl implements IQuestionService {
 
             for (int i = 0; i < img_cnt; i++) {
                 //question_img
-                optionsDao.saveImgByQuestionId(qid,imgPath,imgw,imgh);
+                questionDao.saveImgByQuestionId(qid,imgPath,imgw,imgh);
             }
         }
         //3 delete options
@@ -153,7 +151,7 @@ public class QuestionServiceImpl implements IQuestionService {
             if (qtid==1||qtid==2 || qtid==5){  //单选、多选、判断，保存答案
                 //获取id="as 保存
                 if (option.getAnswer()){
-                    optionsDao.saveAnswer(qid,option.getOptionid());
+                    examDao.saveAnswer(qid,option.getOptionid());
                 }
 
             }
@@ -165,9 +163,9 @@ public class QuestionServiceImpl implements IQuestionService {
     @Override
     public QuestionOut initData(String station_id) throws Exception {
         QuestionOut questionOut = new QuestionOut();
-        List<Question_type> questoinTypeList = question_typeDao.findByStationId(station_id);
-        List<String> fileNameList = question_libDao.findFileNameByStation(station_id);
-        List<Integer> scoreList = question_libDao.findScoreByStation(station_id);
+        List<Question_type> questoinTypeList = questionDao.findByStationId(station_id);
+        List<String> fileNameList = questionDao.findFileNameByStation(station_id);
+        List<Integer> scoreList = questionDao.findScoreByStation(station_id);
         questionOut.setTypeList(questoinTypeList);
         questionOut.setFileNameList(fileNameList);
         questionOut.setScoreList(scoreList);
@@ -182,7 +180,7 @@ public class QuestionServiceImpl implements IQuestionService {
         if (qtype != 0){
             sql = "and ";
         }
-        return question_libDao.findBySearch(station_id,qtype,score,from);
+        return questionDao.findBySearch(station_id,qtype,score,from);
     }
 
     @Override
@@ -191,13 +189,13 @@ public class QuestionServiceImpl implements IQuestionService {
             //1、remove该试题上传的图片信息
 
             //2 delete question_img
-            optionsDao.delteImgByQuestionId(qid);
+            questionDao.deleteImgByQuestionId(qid);
             //3 delete options
             optionsDao.delteOptionByQid(qid);
             //4 delete answer
             examDao.deleteAnswerByQid(qid);
             //4 delete questionlib
-            question_libDao.deleteByQid(qid);
+            questionDao.deleteByQid(qid);
         }catch (Exception e){
             return "NG";
         }

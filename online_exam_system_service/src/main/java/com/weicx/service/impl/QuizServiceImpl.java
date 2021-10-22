@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.weicx.utils.UUIDUtils.generateUuid8;
@@ -35,7 +34,9 @@ public class QuizServiceImpl implements IQuizService {
     private IUsersDao usersDao;
 
     @Autowired
-    private IQuestion_libDao question_libDao;
+    private IQuestionDao question_libDao;
+    @Autowired
+    private IExamDao examDao;
 
 
 
@@ -59,7 +60,7 @@ public class QuizServiceImpl implements IQuizService {
 
         String usersid = "V0042644";
         //2 创建随机试卷quiz_rules
-        String autoQuizId = quizDao.findAutoQuizId(usersid, quizId);
+        String autoQuizId = examDao.findAutoQuizId(usersid, quizId);
         //3 找到对应岗位的题目，通过题型和占比生成question
 
         //4 查询试卷信息

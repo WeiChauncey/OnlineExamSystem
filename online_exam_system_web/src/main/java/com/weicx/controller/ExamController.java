@@ -3,18 +3,16 @@ package com.weicx.controller;/**
  * @create 2021-10-15 15:55
  */
 
-import com.weicx.dao.IExamDao;
 import com.weicx.domain.*;
 import com.weicx.service.IExamService;
 import com.weicx.service.IQuizService;
-import com.weicx.service.tx.ExamServiceUtils.ExamOut;
-import com.weicx.service.tx.ExamServiceUtils.ExamResultOut;
+import com.weicx.service.tx.ExamService.ExamOut;
+import com.weicx.service.tx.ExamService.ExamResultOut;
 import com.weicx.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;

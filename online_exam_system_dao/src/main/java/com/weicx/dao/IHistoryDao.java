@@ -1,16 +1,15 @@
 package com.weicx.dao;
 
 import com.weicx.domain.History;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.weicx.domain.History_answers;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 /**
  * @author weicx
  * @create 2021-10-14 18:53
+ * 与历史相关表：history、history_answers、history_record
  */
 public interface IHistoryDao {
 
@@ -81,4 +80,21 @@ public interface IHistoryDao {
      */
     @Select("SELECT *  FROM history  where id=#{hid} ORDER BY id DESC LIMIT 1 ")
     History  findLastHistoryByUid(Integer hid) throws Exception;
+
+    @Select("SELECT *  FROM history  where uid=#{userId} ORDER BY submit_time DESC ")
+    List<History> findAllByUid(String userId) throws Exception;
+
+    @Select("SELECT *  FROM history_answers  where hid=#{hid} ")
+    List<History_answers> findHistoryAnswerByHid(Integer hid) throws Exception;
+
+    @Delete("delete from history_answers where hid=#{hid}")
+    void deleteAnswerByHid(Integer hid);
+
+    @Delete("delete from history_record where hid=#{hid}")
+    void deleteRecordByHid(Integer hid);
+
+    @Delete("delete from history where id=#{hid}")
+    void deleteHistoryByHid(Integer hid);
+
+
 }

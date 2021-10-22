@@ -6,9 +6,9 @@ package com.weicx.service.impl;/**
 import com.weicx.dao.*;
 import com.weicx.domain.*;
 import com.weicx.service.IExamService;
-import com.weicx.service.tx.ExamServiceUtils.ExamOut;
-import com.weicx.service.tx.ExamServiceUtils.ExamResultOut;
-import com.weicx.service.tx.ExamServiceUtils.QuestionSelecter;
+import com.weicx.service.tx.ExamService.ExamOut;
+import com.weicx.service.tx.ExamService.ExamResultOut;
+import com.weicx.service.Utils.QuestionSelecter;
 import com.weicx.utils.UUIDUtils;
 import com.weicx.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +40,10 @@ public class ExamServiceImpl  implements IExamService {
     private IUsersDao usersDao;
 
     @Autowired
-    private IQuestion_libDao question_libDao;
+    private IQuestionDao questionDao;
 
     @Autowired
     private IHistoryDao historyDao;
-
-    @Autowired
-    private IQuiz_typeDao quizTypeDao;
 
     @Autowired
     private IExamDao examDao;
@@ -83,7 +80,7 @@ public class ExamServiceImpl  implements IExamService {
                 if (System.currentTimeMillis() - submit_time<5){
                     continue;
                 }
-                Quiz_type quizType = quizTypeDao.findByTitle(quizTitle);
+                Quiz_type quizType = quizDao.findByTitle(quizTitle);
                 if (quizType.getOk_interval() == 0 || quizType.getNg_interval() == 0){
                     //自定义考试，依据试卷信息中设定的重考次数,历史考试次数大于等于设定值，不显示
                     if (examByUser.getRetry()<=historyList.size()){
@@ -132,7 +129,7 @@ public class ExamServiceImpl  implements IExamService {
         String autoEid ="";
 
         //获取规则
-        List<Quiz_rules> quizRules = examDao.findQuizRuleByEid(eid);
+        List<Quiz_rules> quizRules = quizDao.findQuizRuleByEid(eid);
         if (quizRules.size()>0){
             //有规则为随机出题，生成随机试卷id
             autoEid = UUIDUtils.generateUuid8();
@@ -142,7 +139,7 @@ public class ExamServiceImpl  implements IExamService {
                     continue;
                 }
                 //get 该题型，该岗位的所有试题，根据目标分数获取试题集合
-                List<Question_lib> questionLibList  = question_libDao.findByEidQtype(section_id,quizRule.getQtype());
+                List<Question_lib> questionLibList  = questionDao.findByEidQtype(section_id,quizRule.getQtype());
 
                 List<Question_lib> resultList = QuestionSelecter.findResult(questionLibList, quizRule.getScore());
                 if (resultList.size()>0){
@@ -161,7 +158,7 @@ public class ExamServiceImpl  implements IExamService {
 
 
         }else {
-            //无规则为手动出题，或者随机出题未定义出题规则
+            //todo 无规则为手动出题，或者随机出题未定义出题规则
 
         }
 
@@ -173,8 +170,8 @@ public class ExamServiceImpl  implements IExamService {
         }
         historyDao.insertHistory(uid,autoEid, 0,start_time);
         Integer hid = historyDao.findByUidAutoEid(uid,autoEid);
-        List<Question_lib> questions = question_libDao.findByQuizAutoId(autoEid);
-        List<Question_img> imgs = question_libDao.findImgByQuizAutoId(autoEid);
+        List<Question_lib> questions = questionDao.findByQuizAutoId(autoEid);
+        List<Question_img> imgs = questionDao.findImgByQuizAutoId(autoEid);
         List<Options> optionsList = optionsDao.findByQuizAutoId(autoEid);
         ExamOut examOut = new ExamOut(hid,autoEid,QuizInfo, questions, imgs,optionsList);
 
@@ -188,7 +185,7 @@ public class ExamServiceImpl  implements IExamService {
 
         Integer totalScore =0;
         //获取随机试卷对应的所有试题
-        List<Question_lib> questions = question_libDao.findByQuizAutoId(autoeid);
+        List<Question_lib> questions = questionDao.findByQuizAutoId(autoeid);
         for (int i = 0; i < questions.size(); i++) {
             Question_lib currentQ = questions.get(i);
             String qid = currentQ.getQid();
@@ -244,7 +241,7 @@ public class ExamServiceImpl  implements IExamService {
         if (lastHistoryByUid != null){
             String autoEid = lastHistoryByUid.getEid();
             //填空、简答结果
-            List<Question_lib> remarkQuestionList = question_libDao.findRemarkQuesiton(autoEid);
+            List<Question_lib> remarkQuestionList = questionDao.findRemarkQuesiton(autoEid);
             remarkCount = remarkQuestionList.size();
             if (remarkCount>0){
                 for (Question_lib remarkQuestion :remarkQuestionList){

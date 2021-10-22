@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author weicx
  * @create 2021-09-13 16:47
+ * 与选项相关表：Users、user_stations、user_powers、user_qmakers
  */
 public interface IUsersDao {
 

@@ -1,8 +1,8 @@
 package com.weicx.service;
 
 import com.weicx.domain.Quiz;
-import com.weicx.service.tx.ExamServiceUtils.ExamOut;
-import com.weicx.service.tx.ExamServiceUtils.ExamResultOut;
+import com.weicx.service.tx.ExamService.ExamOut;
+import com.weicx.service.tx.ExamService.ExamResultOut;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
