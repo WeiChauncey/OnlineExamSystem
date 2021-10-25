@@ -4,6 +4,7 @@ package com.weicx.controller;/**
  */
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.weicx.service.IHistoryService;
 import com.weicx.service.tx.HistoryService.HistoryOut;
 import com.weicx.utils.UserUtils;
@@ -55,6 +56,19 @@ public class HistoryController {
     public String deleteHistoryById(@RequestParam(name = "hid",required = true) Integer hid) throws Exception {
         String result = historyService.deleteHistoryById(hid);
         return JSONObject.toJSONString(result);
+    }
+
+    /**
+     * 通过eid查询考试历史
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/findHistoryByEid.do")
+    public String findHistoryByEid(@RequestParam(name = "eid") String eid) throws Exception {
+
+        List<HistoryOut> historyMeList = historyService.findHistoryByEid(eid);
+        return JSONObject.toJSONString(historyMeList, SerializerFeature.DisableCircularReferenceDetect);
     }
 
 }

@@ -13,4 +13,6 @@ public interface IHistoryService {
     List<HistoryOut> findExamByUser(String username) throws Exception;
 
     String deleteHistoryById(Integer hid) throws Exception;
+
+    List<HistoryOut> findHistoryByEid(String eid) throws Exception;
 }

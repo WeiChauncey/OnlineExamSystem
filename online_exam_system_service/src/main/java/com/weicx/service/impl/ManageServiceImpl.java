@@ -3,13 +3,16 @@ package com.weicx.service.impl;/**
  * @create 2021-09-13 14:58
  */
 
+import com.weicx.dao.IQuizDao;
 import com.weicx.dao.ISectionsDao;
 import com.weicx.dao.IStationDao;
 import com.weicx.dao.IUsersDao;
+import com.weicx.domain.Quiz;
 import com.weicx.domain.Sections;
 import com.weicx.domain.Station;
 import com.weicx.domain.Users;
 import com.weicx.service.IManageService;
+import com.weicx.service.tx.ManageService.PowerStationOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,9 @@ public class ManageServiceImpl implements IManageService {
 
     @Autowired
     private IUsersDao usersDao;
+
+    @Autowired
+    private IQuizDao quizDao;
 
 
     @Override
@@ -87,7 +93,7 @@ public class ManageServiceImpl implements IManageService {
     }
 
     /**
-     *
+     *根据Uid查询user_qmakers的出题岗位
      * @param username
      * @return
      * @throws Exception
@@ -104,5 +110,34 @@ public class ManageServiceImpl implements IManageService {
 
 
         return qmakerStations;
+    }
+
+    /**
+     *根据Uid查询user_powers的出题岗位
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<PowerStationOut> findPowerStationByUid(String username) throws Exception {
+        //1 通过userName，查询出userId
+        Users userInfo = usersDao.findByName(username);
+        String userId = userInfo.getId();
+        //2 通过userId 查询user_powers的出题岗位
+        List<Station> powerStationList = stationDao.findPowerStations(userId);
+        List<PowerStationOut> powerStationOutList = new ArrayList<>();
+        if (powerStationList.size()>0){
+
+            for (Station station : powerStationList) {
+                PowerStationOut powerStationOut = new PowerStationOut();
+                powerStationOut.setStationName(station.getName());
+                List<Quiz> quizTitleList = quizDao.findQuizByStation(station.getId());
+                if (quizTitleList.size()>0){
+                    powerStationOut.setQuizNameList(quizTitleList);
+                }
+                powerStationOutList.add(powerStationOut);
+            }
+        }
+        return powerStationOutList;
     }
 }

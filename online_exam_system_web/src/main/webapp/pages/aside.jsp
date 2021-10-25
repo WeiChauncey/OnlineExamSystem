@@ -37,8 +37,8 @@
                         <i class="fa fa-circle-o"></i> 我的
                     </a></li>
                     <li id="history-all"><a
-                            href="#"> <i
-                            class="fa fa-circle-o"></i> 考生#
+                            href="${pageContext.request.contextPath}/manage/findPowerByUid.do"> <i
+                            class="fa fa-circle-o"></i> 考生
                     </a></li>
 
                 </ul>

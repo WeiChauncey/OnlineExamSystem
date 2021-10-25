@@ -16,14 +16,15 @@ public interface IExamDao {
 
     @Insert("INSERT INTO answer VALUES (#{qid},#{ansid})")
     void saveAnswer(@Param("qid")String qid,@Param("ansid") String optionUUid) throws Exception;
+
     /**
      * 通过试卷Id找到随机试卷Id
-     * @param usersid
+     * 同一人可能做多次随机试卷
      * @param quizId
      * @return
      */
-    @Select("select auto_eid from user_quiz  where uid = #{usersid} and eid = #{quizId}")
-    String  findAutoQuizId(@Param("usersid") String usersid ,@Param("quizId") String quizId) throws Exception;
+    @Select("select auto_eid from user_quiz  where  eid = #{quizId}")
+    List<String>  findAutoQuizIdByEid(@Param("quizId") String quizId) throws Exception;
 
     /**
      * 通过随机试卷Id试卷Id找到

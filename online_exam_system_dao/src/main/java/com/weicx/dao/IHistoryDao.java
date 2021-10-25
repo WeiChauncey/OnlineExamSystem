@@ -48,6 +48,16 @@ public interface IHistoryDao {
     Integer findByUidAutoEid(@Param("uid") String uid, @Param("eid") String autoEid) throws Exception;
 
     /**
+     * 获取历史表的id
+     * @param autoEid
+     * @return
+     * @throws Exception
+     */
+    @Select("SELECT id  FROM history  where eid = #{eid} ORDER BY submit_time   LIMIT 1 ")
+    Integer findByAutoEid(String autoEid) throws Exception;
+
+
+    /**
      * 将填空题的答案写入到history_answers
      * @param hid
      * @param qid

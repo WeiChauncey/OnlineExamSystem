@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.weicx.domain.Sections;
 import com.weicx.domain.Station;
 import com.weicx.service.IManageService;
+import com.weicx.service.tx.ManageService.PowerStationOut;
 import com.weicx.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -115,6 +116,23 @@ public class ManageController {
         mv.addObject("sectionsList",allSection);
         mv.addObject("stationList",stationList);
         mv.setViewName("question-lib-page-list-tree");
+        return mv;
+    }
+
+    /**
+     * 考生试题历史界面：
+     *  通过userNmae查询该user_powers  对应的岗位
+     *  输出手动出题试卷
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("findPowerByUid.do")
+    public ModelAndView findPowerByUid() throws Exception {
+        ModelAndView mv = new ModelAndView();
+        String username = UserUtils.findUserName();
+        List<PowerStationOut> powerStationList = manageService.findPowerStationByUid(username);
+        mv.addObject("powerStationList",powerStationList);
+        mv.setViewName("history-userpower");
         return mv;
     }
 

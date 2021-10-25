@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.weicx.service.Utils.QuizUtils.findAutoEidByEid;
 import static com.weicx.utils.UUIDUtils.generateUuid8;
 
 /**
@@ -56,11 +57,10 @@ public class QuizServiceImpl implements IQuizService {
 
     @Override
     public Quiz findById(String quizId) throws Exception {
-        //1、检查未完成的exam
+        //todo 1、检查未完成的exam
 
-        String usersid = "V0042644";
         //2 创建随机试卷quiz_rules
-        String autoQuizId = examDao.findAutoQuizId(usersid, quizId);
+        String autoQuizId = findAutoEidByEid(quizId);
         //3 找到对应岗位的题目，通过题型和占比生成question
 
         //4 查询试卷信息

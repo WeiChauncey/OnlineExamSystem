@@ -69,6 +69,9 @@ public interface IQuizDao {
     })
     List<Quiz> findExamByUser(String userId) throws Exception;
 
+    @Select("select * from Quiz where station_id = #{id}")
+    List<Quiz> findQuizByStation(Integer id) throws Exception;
+
     /**
      * 通过Uid 和Eid获取随机试卷id
 
@@ -90,4 +93,6 @@ public interface IQuizDao {
      */
     @Select("select * from Quiz_rules where  eid = #{eid}")
     List<Quiz_rules>   findQuizRuleByEid(String eid) throws Exception;
+
+
 }

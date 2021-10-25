@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.weicx.service.Utils.QuizUtils.findAutoEidByEid;
+
 /**
  * @ClassName HistoryServiceImpl
  * @Description TODO
@@ -110,12 +112,73 @@ public class HistoryServiceImpl implements IHistoryService {
         String eid = examDao.findQuizByAutoId(autoEid);
         if (eid != null) {
             //随机出题试卷,删除questions、user_quiz
-            examDao.deleteQuestionByEid(eid);
-            examDao.deleteUserQuizByEid(eid);
+            examDao.deleteQuestionByEid(autoEid);
+            examDao.deleteUserQuizByEid(autoEid);
         }
         historyDao.deleteAnswerByHid(hid);
         historyDao.deleteRecordByHid(hid);
         historyDao.deleteHistoryByHid(hid);
         return "OK";
+    }
+
+    @Override
+    public List<HistoryOut> findHistoryByEid(String eid) throws Exception {
+        Quiz quizInfo = quizDao.findById(eid);
+        if (null == quizInfo) {
+            //todo 报错，未找到该试卷
+            return null;
+        }
+        Integer pass_score = quizInfo.getPass_score();
+
+
+        //通过eid找到随机试卷ID
+        List<String> autoEidList = examDao.findAutoQuizIdByEid(eid);
+        List<HistoryOut> historyOutList = new ArrayList<>();
+        if (autoEidList.size()==0){
+            return historyOutList;
+        }
+        for (String autoEid : autoEidList) {
+            Integer hid = historyDao.findByAutoEid(autoEid);
+            if (hid ==null){
+                continue;
+            }
+
+            //get 人工判卷分数
+            Integer remarkScore = 0;
+            List<History_answers> answersList = historyDao.findHistoryAnswerByHid(hid);
+            History lastHistory = historyDao.findLastHistoryByUid(hid);
+            Users userInfo = usersDao.findById(lastHistory.getUid());
+            String userName = userInfo.getName();
+
+
+            Integer userScore = lastHistory.getScore();
+            long submit_time = lastHistory.getSubmit_time();
+            //时间戳转化为字符串
+            String submitTimeStr = DateUtils.dateToString(new Date(submit_time * 1000), "yyyy-MM-dd HH:mm:ss");
+            Integer isRemark = 1;
+            if (answersList.size() == 0) {
+                //没有需人工判卷试题时，则批阅
+                isRemark = 1;
+            } else {
+                //有需人工判卷试题时
+                for (History_answers history_answers : answersList) {
+                    if (history_answers.getIs_correct() == 0) {
+                        isRemark = 0;
+                    }
+                    remarkScore += history_answers.getScore();
+                }
+            }
+            String examResult ="未通过";
+            if (remarkScore+userScore>=pass_score){
+                examResult="通过";
+            }else if (isRemark==0){
+                examResult="待定";
+            }
+            HistoryOut historyOut = new HistoryOut(hid,userName, quizInfo.getTitle(), submitTimeStr, userScore, remarkScore, pass_score, examResult,isRemark);
+            historyOutList.add(historyOut);
+        }
+
+
+        return historyOutList;
     }
 }

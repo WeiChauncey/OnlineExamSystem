@@ -13,11 +13,13 @@ package com.weicx.service.tx.HistoryService;/**
 public class HistoryOut {
 
     private Integer hid;
+    private String  userName;   //答题人
     private String title;
     private String submit_timeStr;
     private Integer userScore;       //自动判卷分数
     private Integer remarkScore;  //人工判卷分数
     private Integer pass_score;
+    private String  examResult; //通过、待定、未通过
     private Integer isCorrect;       //0未批阅，1批阅
 
     public HistoryOut() {
@@ -33,12 +35,32 @@ public class HistoryOut {
         this.isCorrect = isCorrect;
     }
 
+    public HistoryOut(Integer hid, String userName, String title, String submit_timeStr, Integer userScore, Integer remarkScore, Integer pass_score, String examResult, Integer isCorrect) {
+        this.hid = hid;
+        this.userName = userName;
+        this.title = title;
+        this.submit_timeStr = submit_timeStr;
+        this.userScore = userScore;
+        this.remarkScore = remarkScore;
+        this.pass_score = pass_score;
+        this.examResult = examResult;
+        this.isCorrect = isCorrect;
+    }
+
     public Integer getHid() {
         return hid;
     }
 
     public void setHid(Integer hid) {
         this.hid = hid;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getTitle() {
@@ -79,6 +101,14 @@ public class HistoryOut {
 
     public void setPass_score(Integer pass_score) {
         this.pass_score = pass_score;
+    }
+
+    public String getExamResult() {
+        return examResult;
+    }
+
+    public void setExamResult(String examResult) {
+        this.examResult = examResult;
     }
 
     public Integer getIsCorrect() {

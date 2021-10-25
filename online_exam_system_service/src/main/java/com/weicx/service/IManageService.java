@@ -3,6 +3,7 @@ package com.weicx.service;
 import com.weicx.domain.Question_lib;
 import com.weicx.domain.Sections;
 import com.weicx.domain.Station;
+import com.weicx.service.tx.ManageService.PowerStationOut;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface IManageService {
     String modifySection(String sectionId, String sectionName) throws Exception;
 
     List<Station> findSationByUserName(String username) throws Exception;
+
+    List<PowerStationOut> findPowerStationByUid(String username) throws Exception;
 }
